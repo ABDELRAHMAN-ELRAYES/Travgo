@@ -9,12 +9,11 @@ import {
 
 const tourRouter = express.Router();
 
+tourRouter.route("/").get(getAllTours).post(createNewTour);
 tourRouter
   .route("/:id")
   .get(getTour)
-  .post(createNewTour)
   .delete(deleteTour)
   .put(updateTour);
-tourRouter.route("/").get(getAllTours);
 
 export default tourRouter;
