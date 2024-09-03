@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 import {
   getUser,
   getAllUser,
@@ -7,7 +7,8 @@ import {
   deleteUser,
 } from './../controllers/userControllers';
 import { login, signup } from './../controllers/authControllers';
-const userRouter = express.Router();
+
+const userRouter = Router();
 
 userRouter.post('/login', login);
 userRouter.post('/signup', signup);

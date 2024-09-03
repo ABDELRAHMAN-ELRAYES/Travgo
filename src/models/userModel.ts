@@ -59,8 +59,17 @@ userSchema.methods.verifyPassword = async function (
   userPassword: string
 ) {
   if (!enteredPassword || !userPassword) {
-    throw new Error("Both passwords must be provided for comparison.");
+    throw new Error('Both passwords must be provided for comparison.');
   }
   return await bycrypt.compare(enteredPassword, userPassword);
+};
+userSchema.methods.checkPasswordReset = function (tokenStamp: number) {
+  const passwordResetStamp = Math.floor(
+    this.passwordChangedAt.getTime() / 1000
+  );
+  if (!this.passwordChangedAt) {
+    return false;
+  }
+  return tokenStamp < passwordResetStamp;
 };
 export const User = model<userDoc>('User', userSchema);

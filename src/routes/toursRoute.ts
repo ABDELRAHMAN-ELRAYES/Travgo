@@ -1,19 +1,16 @@
-import express from "express";
+import {Router} from 'express';
 import {
   getTour,
   getAllTours,
   createNewTour,
   updateTour,
   deleteTour,
-} from "./../controllers/toursController";
+} from './../controllers/toursController';
+import { protect } from '../controllers/authControllers';
 
-const tourRouter = express.Router();
+const tourRouter = Router();
 
-tourRouter.route("/").get(getAllTours).post(createNewTour);
-tourRouter
-  .route("/:id")
-  .get(getTour)
-  .delete(deleteTour)
-  .put(updateTour);
+tourRouter.route('/').get(protect, getAllTours).post(createNewTour);
+tourRouter.route('/:id').get(getTour).delete(deleteTour).put(updateTour);
 
 export default tourRouter;
