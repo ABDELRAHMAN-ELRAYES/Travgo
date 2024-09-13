@@ -4,6 +4,7 @@ import { User } from './../models/userModel';
 import { ErrorHandler } from '../utils/error';
 import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
+import { sendMail, transporter, options } from './../utils/email';
 
 const createUserToken = async (id: string) => {
   return await jwt.sign({ id }, <string>process.env.JWT_SECRET, {
@@ -90,14 +91,38 @@ export const protect = catchAsync(
         new ErrorHandler('User with the current token is nolonger found!.', 401)
       );
     }
-    
+
     // 4-check if the password changed after token
     const isPasswordReset = user.checkPasswordReset(decoded.iat);
-    if(isPasswordReset){
-      return next(new ErrorHandler('The password is changed ,session time out,plz login again',401));
+    if (isPasswordReset) {
+      return next(
+        new ErrorHandler(
+          'The password is changed ,session time out,plz login again',
+          401
+        )
+      );
     }
 
     req.user = user;
     next();
+  }
+);
+export const forgetPassword = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return next(
+        new ErrorHandler('User with entered email is not found!.', 401)
+      );
+    }
+
+    const token = user.createResetPasswordToken();
+
+    // await user.save({validateBeforeSave:false});
+    await sendMail(transporter, options);
+
+    res.status(200).json({
+      status: 'success',
+    });
   }
 );

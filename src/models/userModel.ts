@@ -3,6 +3,7 @@ import validator from 'validator';
 import { userDoc } from '../interfaces/userDoc';
 import bycrypt from 'bcryptjs';
 import { promisify } from 'util';
+import crypto from 'crypto';
 
 const userSchema = new Schema<userDoc>({
   name: {
@@ -71,5 +72,14 @@ userSchema.methods.checkPasswordReset = function (tokenStamp: number) {
     return false;
   }
   return tokenStamp < passwordResetStamp;
+};
+userSchema.methods.createResetPasswordToken = function () {
+  let token = crypto.randomBytes(32).toString('hex');
+  this.passwordResetToken = crypto
+    .createHash('sha-256')
+    .update(token)
+    .digest('hex');
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  return this.passwordResetToken;
 };
 export const User = model<userDoc>('User', userSchema);

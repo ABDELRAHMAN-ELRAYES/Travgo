@@ -11,4 +11,5 @@ export interface userDoc extends Document {
   photo?: string;
   verifyPassword(paramOne: string, paramTwo: string): Promise<boolean>;
   checkPasswordReset(param: number): boolean;
+  createResetPasswordToken(): string;
 }

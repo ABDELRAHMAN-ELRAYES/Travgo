@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Noto+Sans+JP:wght@100..900&display=swap');
+:root {
+  --main: #fff6f7;
+  --first-con: #ffd8d9;
+  --second-con: #ffeae9;
+  --font: #32326e;
+  --contrast: #7bd8c6;
+  --logo-font: 'Dancing Script';
+  --main-font: 'Noto Sans JP';
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  box-sizing: border-box;
+  color: var(--font);
+  font-family: var(--main-font);
+}
+button {
+  cursor: pointer;
+}
+section {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--main);
+  display: flex;
+}
+.btn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 8rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+  color: var(--font);
+  font-size: 1rem;
+  font-weight: 900;
+}
+ul {
+  text-decoration: none;
+}
+a {
+  text-decoration: none;
+  color: var(--font);
+}
+nav,
+nav ul,
+.nav-btns {
+  display: flex;
+}
+nav {
+  align-items: center;
+  justify-content: space-evenly;
+  height: 5rem;
+  padding: 0 10rem;
+  background-color: var(--main);
+}
+nav .logo {
+  font-family: var(--logo-font);
+  font-size: 2.5rem;
+  font-weight: 1000;
+  height: 100%;
+  padding-top: 1rem;
+}
+nav ul {
+  list-style: none;
+  height: 100%;
+}
+nav ul li {
+  display: grid;
+  place-items: center;
+  width: 5rem;
+  font-size: 1.1rem;
+}
+nav .logo img {
+  width: 2rem;
+}
+.signin-btn {
+  background-color: var(--contrast);
+  color: var(--main);
+}
+.home-sec {
+  justify-content: center;
+}
+.home-content {
+  width: 85%;
+  height: 80%;
+  border-bottom-right-radius: 8rem;
+  border-bottom-left-radius: 8rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.home-content .img {
+  overflow: hidden;
+  display: flex;
+}
+.home-content .img img {
+  width: 100%;
+  border-bottom-left-radius: 8rem;
+}
+.home-content .info {
+  padding-left: 6rem;
+  position: relative;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(1.5rem);
+}
+.home-content .ball {
+  border-radius: 50%;
+  position: absolute;
+
+  z-index: 0;
+}
+.first-ball {
+  background-color: var(--first-con);
+  right: 45rem;
+  bottom: 25rem;
+  width: 12rem;
+  height: 12rem;
+}
+.second-ball {
+  background-color: var(--contrast);
+  right: 35rem;
+  top: 10rem;
+  width: 7rem;
+  height: 7rem;
+}
+.third-ball {
+  background-color: var(--first-con);
+  right: 14rem;
+  top: 30rem;
+  width: 9rem;
+  height: 9rem;
+}
+.fourth-ball {
+  background-color: var(--font);
+  right: 25rem;
+  bottom: 10rem;
+  width: 15rem;
+  height: 15rem;
+}
+.fifth-ball {
+  background-color: var(--font);
+  right: 10rem;
+  top: 10rem;
+  width: 10rem;
+  height: 10rem;
+}
+.home-sec .info-content h2 {
+  font-size: 4rem;
+}
+.home-sec .info-content p {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+.home-sec .info-content .highlighted-word {
+  position: relative;
+}
+.home-sec .info-content .highlighted-word::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 30%;
+  background-color: #7bd8c678;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  transition: 0.6s ease-out;
+  transform: skew(-15deg);
+}
+.home-sec .info-content .highlighted-word:hover::after {
+  height: 100%;
+}
+.home-content .info {
+  display: grid;
+  place-items: center;
+}
+.home-content .search-container {
+  position: absolute;
+  width: 65rem;
+  height: 10rem;
+  background: var(--first-con);
+  border-radius: 4rem;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* tours section */
+.tours-sec {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: fit-content;
+}
+.tours-sec h1 {
+  font-size: 4rem;
+  font-weight: 900;
+  margin-bottom: 3rem;
+}
+.tours-content {
+  width: 85%;
+  height: 80%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  height: fit-content;
+  margin-bottom: 4rem;
+}
+.tour-card {
+  width: 30rem;
+  min-height: 35rem;
+  height: fit-content;
+  background: var(--font);
+  border-bottom-right-radius: 8rem;
+  border-bottom-left-radius: 8rem;
+  padding: 1rem;
+  height: fit-content;
+  color: var(--main);
+  position: relative;
+  transition: 0.6s;
+}
+.tour-card:hover {
+  transform: scale(1.1);
+}
+.tour-card .tour-title {
+  font-size: 2.9rem;
+  position: absolute;
+  top: 9rem;
+  left: 50%;
+  transform: translateX(-50%);
+  mix-blend-mode: difference;
+  display: grid;
+  width: 100%;
+  place-items: center;
+}
+.tour-card img {
+  width: 100%;
+  height: 20rem;
+  margin-bottom: 2rem;
+}
+.tour-summary {
+  font-size: 0.9rem;
+}
+.tour-card-info {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+.icon {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+.icon i {
+  display: grid;
+  place-items: center;
+  margin-right: 0.5rem;
+}
+.highlighted-card-word {
+  font-size: 0.8rem;
+  color: var(--first-con);
+}
+.tour-btn {
+  /* border: 1px solid var(--main);
+  color: var(--main);
+   */
+  background-color: var(--main);
+  color: var(--font);
+}
+.card-form {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
