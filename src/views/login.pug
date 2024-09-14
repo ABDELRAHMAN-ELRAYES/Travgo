@@ -1,0 +1,16 @@
+extends home
+
+block content
+    .login-form-container
+        form.submit-form(action="/users/login" method="POST")
+            h1.form-title Login
+            .input-dev.email-input
+                label(for="email") Email Address
+                input(type="email" name="email" placeholder="Enter Your Email")
+            .input-dev.pass-input
+                label(for="password") Password
+                input.pas(type="password" name="password" placeholder=".......")
+            button.form-btn.login(type='submit') Login
+            .form-footer
+                span Forgot Password?
+                a(href="/signup") Sign up

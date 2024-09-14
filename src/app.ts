@@ -4,6 +4,7 @@ import {
   bodyParser,
   globalErrorHandlerMiddleware,
   cookiesParser,
+  urlEndcoded,
 } from './middlewares/middlewares';
 import tourRouter from './routes/toursRoute';
 import userRouter from './routes/userRoute';
@@ -16,6 +17,7 @@ const app = express();
 
 // middlewares
 app.use(morganMiddleware);
+app.use(urlEndcoded);
 app.use(bodyParser);
 app.use(cookiesParser);
 

@@ -23,12 +23,16 @@ html
                     a(href="") Services 
                 li.nav-link    
                     a(href="/shop") Shop
-
-            .nav-btns
-                form.signup(action="")
-                    button.btn.signup-btn(type="submit") Sign up   
-                form.signin(action="")
-                    button.btn.signin-btn(type="submit") Sign in   
+            if user 
+                .user-info
+                    img(src=`/img/users/${user.photo}`, alt="")
+                    p #{user.name}
+            else
+                .nav-btns
+                    .signup
+                        a.signup-btn(href="/signup") Sign up   
+                    .signin
+                        a.signin-btn(href="/login") Sign in   
         block content
             section.home-sec
                 .home-content 

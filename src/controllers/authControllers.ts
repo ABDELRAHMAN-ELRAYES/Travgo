@@ -4,8 +4,8 @@ import { User } from './../models/userModel';
 import { ErrorHandler } from '../utils/error';
 import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
+import Tour from '../models/tourModel';
 import { sendMail, transporter, options } from './../utils/email';
-import { stat } from 'fs';
 
 /* 
 
@@ -74,6 +74,7 @@ export const login = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     // 1) check all required data is entered
     const { email, password } = req.body;
+    console.log(req.body);
     if (!email || !password) {
       return next(
         new ErrorHandler(
@@ -105,10 +106,17 @@ export const login = catchAsync(
     // 4) create a session for this user (create a token)
     const token = await createToken(res, user._id.toString());
 
-    res.status(200).json({
-      status: 'success',
-      message: 'You are signed in successfully',
-      token,
+    // res.status(200).json({
+    //   status: 'success',
+    //   message: 'You are signed in successfully',
+    //   token,
+    // });
+
+    const tours = await Tour.find().limit(3);
+    res.status(200).render('home', {
+      title: 'Home',
+      tours,
+      user,
     });
   }
 );

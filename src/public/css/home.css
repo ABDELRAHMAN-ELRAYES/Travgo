@@ -58,7 +58,8 @@ nav {
   padding: 0 10rem;
   background-color: var(--main);
 }
-nav .logo ,footer .logo{
+nav .logo,
+footer .logo {
   font-family: var(--logo-font);
   font-size: 2.5rem;
   font-weight: 1000;
@@ -77,6 +78,31 @@ nav ul li {
 }
 nav .logo img {
   width: 2rem;
+}
+nav .user-info {
+  display: flex;
+  align-items: center;
+}
+nav .user-info img {
+  width: 3rem;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+nav .user-info p {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.signup-btn,
+.signin-btn {
+  display: grid;
+  place-items: center;
+  width: 8rem;
+  height: 3rem;
+  font-size: 1rem;
+  font-weight: 900;
+  border-radius: 1.5rem;
+  cursor: pointer;
 }
 .signin-btn {
   background-color: var(--contrast);
@@ -301,8 +327,69 @@ footer {
   box-sizing: border-box;
   margin-top: 10rem;
 }
-footer .logo{
-
+footer .logo {
   padding-top: 0rem;
   height: fit-content;
+}
+
+.submit-form {
+  width: fit-content;
+  height: fit-content;
+  padding: 3rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--con-color);
+
+  background: rgba(255, 255, 255, 0.13);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px var(--font);
+  backdrop-filter: blur(5.5px);
+  -webkit-backdrop-filter: blur(5.5px);
+}
+input {
+  padding: 0 1rem;
+  width: 15rem;
+  margin: 0.5rem 0 2rem 0;
+}
+.form-btn,
+input {
+  outline: none;
+  height: 3rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+}
+.form-btn {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 1.5rem;
+  background: var(--font);
+  color: var(--main);
+}
+.input-dev {
+  display: flex;
+  flex-direction: column;
+  /* width: ; */
+}
+.form-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.form-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  display: grid;
+  place-items: center;
+}
+.login-form-container,
+.signup-form-container {
+  margin-top: 7rem;
+  display: flex;
+  justify-content: center;
+}
+.first-input-content,
+.second-input-content {
+  display: flex;
+  justify-content: space-between;
+  width: 102%;
 }

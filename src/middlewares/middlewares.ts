@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 
 export const morganMiddleware = morgan('dev');
 export const bodyParser = express.json();
+export const urlEndcoded = express.urlencoded({ extended: true });
 export const cookiesParser = cookieParser();
 
 // export const handMadeMiddleware = (
