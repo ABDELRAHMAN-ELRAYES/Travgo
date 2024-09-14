@@ -17,6 +17,7 @@ body {
   box-sizing: border-box;
   color: var(--font);
   font-family: var(--main-font);
+  background: var(--main);
 }
 button {
   cursor: pointer;
@@ -57,7 +58,7 @@ nav {
   padding: 0 10rem;
   background-color: var(--main);
 }
-nav .logo {
+nav .logo ,footer .logo{
   font-family: var(--logo-font);
   font-size: 2.5rem;
   font-weight: 1000;
@@ -273,4 +274,35 @@ nav .logo img {
   display: flex;
   justify-content: space-around;
   margin-top: 2rem;
+}
+.view-more-btn {
+  position: relative;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.view-more-btn::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 50%;
+  left: -5rem;
+  top: 1rem;
+  background-color: var(--font);
+}
+footer {
+  display: flex;
+  width: 100%;
+  height: 5rem;
+  background: var(--contrast);
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem;
+  box-sizing: border-box;
+  margin-top: 10rem;
+}
+footer .logo{
+
+  padding-top: 0rem;
+  height: fit-content;
 }

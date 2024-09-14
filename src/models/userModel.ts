@@ -4,6 +4,7 @@ import { userDoc } from '../interfaces/userDoc';
 import bycrypt from 'bcryptjs';
 import { promisify } from 'util';
 import crypto from 'crypto';
+import { ErrorHandler } from '../utils/error';
 
 const userSchema = new Schema<userDoc>({
   name: {
@@ -33,9 +34,8 @@ const userSchema = new Schema<userDoc>({
     type: String,
     required: [true, 'Please confirm your password'],
     validate: {
-      // This only works on CREATE and SAVE!!!
-      validator: function (this: userDoc, el: string) {
-        return el === this.password;
+      validator: function (this: userDoc, element: string) {
+        return element === this.password;
       },
       message: 'Passwords are not the same!',
     },
@@ -49,28 +49,31 @@ const userSchema = new Schema<userDoc>({
     select: false,
   },
 });
+// hashing the users password 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bycrypt.hash(this.password, 12);
   this.passwordConfirm = JSON.stringify(undefined);
   next();
 });
+// a method to compare the entered password and original user password
 userSchema.methods.verifyPassword = async function (
-  enteredPassword: string,
-  userPassword: string
+  enteredPass: string,
+  userPass: string
 ) {
-  if (!enteredPassword || !userPassword) {
-    throw new Error('Both passwords must be provided for comparison.');
+  if (!enteredPass || !userPass) {
+    return new Error('Both passwords must be provided for comparison');
   }
-  return await bycrypt.compare(enteredPassword, userPassword);
+  return await bycrypt.compare(enteredPass, userPass);
 };
+// check if the password is changed after the token fired
 userSchema.methods.checkPasswordReset = function (tokenStamp: number) {
-  const passwordResetStamp = Math.floor(
-    this.passwordChangedAt.getTime() / 1000
-  );
   if (!this.passwordChangedAt) {
     return false;
   }
+  const passwordResetStamp = Math.floor(
+    this.passwordChangedAt.getTime() / 1000
+  );
   return tokenStamp < passwordResetStamp;
 };
 userSchema.methods.createResetPasswordToken = function () {

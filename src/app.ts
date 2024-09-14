@@ -3,6 +3,7 @@ import {
   morganMiddleware,
   bodyParser,
   globalErrorHandlerMiddleware,
+  cookiesParser,
 } from './middlewares/middlewares';
 import tourRouter from './routes/toursRoute';
 import userRouter from './routes/userRoute';
@@ -16,6 +17,7 @@ const app = express();
 // middlewares
 app.use(morganMiddleware);
 app.use(bodyParser);
+app.use(cookiesParser);
 
 // setup the view engine
 app.set('view engine', 'pug');

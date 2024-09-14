@@ -2,9 +2,11 @@ import express from 'express';
 import morgan from 'morgan';
 import { Request, Response, NextFunction } from 'express';
 import { iError } from '../interfaces/iError';
+import cookieParser from 'cookie-parser';
 
 export const morganMiddleware = morgan('dev');
 export const bodyParser = express.json();
+export const cookiesParser = cookieParser();
 
 // export const handMadeMiddleware = (
 //   req: Request,

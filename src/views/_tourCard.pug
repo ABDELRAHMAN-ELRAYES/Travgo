@@ -1,0 +1,29 @@
+mixin tourCard(name,summary,ratingsAverage,ratingsQuantity,price,location,groupSize,img,startDate,stops)
+    .tour-card
+        img(src=`/img/tours/${img}`, alt="")
+        h2.tour-title=name 
+        p.tour-summary=`${summary}.`
+        .tour-card-info
+            .loc-stops
+                .icon
+                    i.fa-solid.fa-location-dot
+                    p.tour-location=location 
+                .icon
+                    i.fa-regular.fa-flag
+                    p.tour-stops=`${stops} `
+                        span.highlighted-card-word stops
+            .date-size
+                .icon
+                    i.fa-solid.fa-calendar-days
+                    p.tour-start-date=startDate
+                .icon    
+                    i.fa-solid.fa-person
+                    p.tour-group-size=`${groupSize} `
+                        span.highlighted-card-word people
+        form.card-form(action="") 
+            .price-rating
+                p.tour-price=`$${price} `
+                    span.highlighted-card-word (per person)
+                p.tour-rate-quantity=`${ratingsAverage} `
+                    span.highlighted-card-word=`/5 rating(${ratingsQuantity})`
+            button.btn.tour-btn(type='submit') Details

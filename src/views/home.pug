@@ -1,32 +1,4 @@
-mixin tourCard(name,summary,ratingsAverage,ratingsQuantity,price,location,groupSize,img,startDate,stops)
-    .tour-card
-        img(src=`/img/tours/${img}`, alt="")
-        h2.tour-title=name 
-        p.tour-summary=`${summary}.`
-        .tour-card-info
-            .loc-stops
-                .icon
-                    i.fa-solid.fa-location-dot
-                    p.tour-location=location 
-                .icon
-                    i.fa-regular.fa-flag
-                    p.tour-stops=`${stops} `
-                        span.highlighted-card-word stops
-            .date-size
-                .icon
-                    i.fa-solid.fa-calendar-days
-                    p.tour-start-date=startDate
-                .icon    
-                    i.fa-solid.fa-person
-                    p.tour-group-size=`${groupSize} `
-                        span.highlighted-card-word people
-        form.card-form(action="") 
-            .price-rating
-                p.tour-price=`$${price} `
-                    span.highlighted-card-word (per person)
-                p.tour-rate-quantity=`${ratingsAverage} `
-                    span.highlighted-card-word=`/5 rating(${ratingsQuantity})`
-            button.btn.tour-btn(type='submit') Details
+include _tourCard.pug
         
 doctype html 
 html
@@ -44,40 +16,45 @@ html
             h2.logo Travgo
             ul 
                 li.nav-link 
-                    a(href="") Home
+                    a(href="/") Home
                 li.nav-link 
                     a(href="") Blog
                 li.nav-link 
                     a(href="") Services 
                 li.nav-link    
-                    a(href="") Shop
+                    a(href="/shop") Shop
 
             .nav-btns
                 form.signup(action="")
                     button.btn.signup-btn(type="submit") Sign up   
                 form.signin(action="")
                     button.btn.signin-btn(type="submit") Sign in   
+        block content
+            section.home-sec
+                .home-content 
+                    .ball.first-ball 
+                    .ball.second-ball 
+                    .ball.third-ball 
+                    .ball.fourth-ball 
+                    .ball.fifth-ball  
+                    .img
+                        img(src="/img/home-sec.jpg", alt="")
+                    .info 
+                        .info-content 
+                            h2 Let's make your <br> 
+                                span.highlighted-word best Tour ever!
+                            p We organize the vacation of your dreams <br> in breathtaking places around the world.Choose one <br> of our special destinations or offer your own .
+                    .search-container
 
-        section.home-sec
-            .home-content 
-                .ball.first-ball 
-                .ball.second-ball 
-                .ball.third-ball 
-                .ball.fourth-ball 
-                .ball.fifth-ball  
-                .img
-                    img(src="/img/home-sec.jpg", alt="")
-                .info 
-                    .info-content 
-                        h2 Let's make your <br> 
-                            span.highlighted-word best Tour ever!
-                        p We organize the vacation of your dreams <br> in breathtaking places around the world.Choose one <br> of our special destinations or offer your own .
-                .search-container
 
-
-        section.tours-sec
-            h1.tours-title All Tours 
-            .tours-content
-                each tour in tours
-                    - let date = new Date(tour.startDates[0]).toLocaleDateString('en-US', {  year: 'numeric',  month: 'long', day: 'numeric',});
-                    +tourCard(tour.name,tour.summary,tour.ratingsAverage,tour.ratingsQuantity,tour.price,tour.startLocation.description,tour.maxGroupSize,tour.imageCover,date,tour.locations.length)
+            section.tours-sec
+                h1.tours-title Tours 
+                .tours-content
+                    each tour in tours
+                        - let date = new Date(tour.startDates[0]).toLocaleDateString('en-US', {  year: 'numeric',  month: 'long', day: 'numeric',});
+                        +tourCard(tour.name,tour.summary,tour.ratingsAverage,tour.ratingsQuantity,tour.price,tour.startLocation.description,tour.maxGroupSize,tour.imageCover,date,tour.locations.length)
+                
+                a(href="/shop").view-more-btn view more Tours
+        footer 
+            h2.logo Travgo
+            p © 2024 by Abdelrahman Elrayes.

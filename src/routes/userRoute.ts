@@ -14,8 +14,8 @@ import {
 
 const userRouter = Router();
 
-userRouter.post('/login', login);
 userRouter.post('/signup', signup);
+userRouter.post('/login', login);
 userRouter.post('/privacy/forget-password', forgetPassword);
 
 userRouter.route('/').get(getAllUser).post(createNewUser);

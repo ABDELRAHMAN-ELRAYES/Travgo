@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import {
   getTour,
   getAllTours,
@@ -6,11 +6,14 @@ import {
   updateTour,
   deleteTour,
 } from './../controllers/toursController';
-import { protect } from '../controllers/authControllers';
+import { protect, restrictTo } from '../controllers/authControllers';
 
 const tourRouter = Router();
 
-tourRouter.route('/').get(protect, getAllTours).post(createNewTour);
+tourRouter
+  .route('/')
+  .get(protect, restrictTo('admin', 'lead-guide'), getAllTours)
+  .post(createNewTour);
 tourRouter.route('/:id').get(getTour).delete(deleteTour).put(updateTour);
 
 export default tourRouter;

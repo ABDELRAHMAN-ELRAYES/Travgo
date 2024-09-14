@@ -1,0 +1,9 @@
+extends home
+block content 
+    section.tours-sec
+                h1.tours-title All Tours 
+                .tours-content
+                    each tour in tours
+                        - let date = new Date(tour.startDates[0]).toLocaleDateString('en-US', {  year: 'numeric',  month: 'long', day: 'numeric',});
+                        +tourCard(tour.name,tour.summary,tour.ratingsAverage,tour.ratingsQuantity,tour.price,tour.startLocation.description,tour.maxGroupSize,tour.imageCover,date,tour.locations.length)
+                
