@@ -26,12 +26,10 @@ export const renderHomeWithUser = catchAsync(
 // render the shop page
 export const renderShop = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const user = req.user;
     const tours = await Tour.find();
     res.status(200).render('shop', {
       title: 'Shop',
       tours,
-      user,
     });
   }
 );
@@ -50,6 +48,14 @@ export const renderLogin = catchAsync(
     const tours = await Tour.find();
     res.status(200).render('login', {
       title: 'Login',
+    });
+  }
+);
+export const renderProfile = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const tours = await Tour.find();
+    res.status(200).render('profile', {
+      title: 'Profile',
     });
   }
 );

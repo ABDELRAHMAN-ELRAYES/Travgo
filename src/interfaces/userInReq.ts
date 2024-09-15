@@ -4,5 +4,8 @@ declare global {
     interface Request {
       user?: any;
     }
+    interface Locals {
+      user?: any;
+    }
   }
 }

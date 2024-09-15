@@ -24,9 +24,10 @@ html
                 li.nav-link    
                     a(href="/shop") Shop
             if user 
-                .user-info
-                    img(src=`/img/users/${user.photo}`, alt="")
-                    p #{user.name}
+                 a(href="/profile")   
+                    .user-info
+                        img(src=`/img/users/${user.photo}`, alt="")
+                        p #{user.name.split(' ')[0]}
             else
                 .nav-btns
                     .signup

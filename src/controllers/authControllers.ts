@@ -187,6 +187,42 @@ export const restrictTo = (...roles: string[]) => {
   };
 };
 
+export const isLoggedIn = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.cookies.jwt) {
+    try {
+      const token = req.cookies.jwt;
+
+      // 2) verify current token
+      const decoded = await verifyToken(token, <string>process.env.JWT_SECRET);
+
+      if (!decoded) {
+        return next();
+      }
+      // 3) extract user id from the token to get the current user
+
+      const currentUser = await User.findById(decoded.id);
+
+      // 4) Check if the user is still exist (not deleted)
+      if (!currentUser) {
+        return next();
+      }
+      // 5) check if the password is changed
+      const isPasswordReset = currentUser.checkPasswordReset(decoded.iat);
+      if (isPasswordReset) {
+        return next();
+      }
+      // 6) add  current user data to the response
+      res.locals.user = currentUser;
+    } catch (error) {
+      return next();
+    }
+  }
+  next();
+};
 export const forgetPassword = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {}
 );

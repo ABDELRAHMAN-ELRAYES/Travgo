@@ -26,4 +26,6 @@ mixin tourCard(name,summary,ratingsAverage,ratingsQuantity,price,location,groupS
                     span.highlighted-card-word (per person)
                 p.tour-rate-quantity=`${ratingsAverage} `
                     span.highlighted-card-word=`/5 rating(${ratingsQuantity})`
-            button.btn.tour-btn(type='submit') Details
+            .btns
+                button.btn.tour-detail-btn(type='submit') Details
+                button.btn.tour-btn(type='submit') Add to cart
