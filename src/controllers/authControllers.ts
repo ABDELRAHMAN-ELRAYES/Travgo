@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
 import Tour from '../models/tourModel';
 import { sendMail, transporter, options } from './../utils/email';
+import { title } from 'process';
 
 /* 
 
@@ -57,17 +58,14 @@ export const signup = catchAsync(
     if (user.length) {
       return next(new ErrorHandler('This email is already registered', 401));
     }
+    req.body.photo = req.file?.filename;
     const newUser = await User.create(req.body);
 
     // 4) create a session for this user (create a token)
 
     const token = await createToken(res, newUser._id.toString());
-    //3) create a user
-    res.status(200).json({
-      status: 'success',
-      message: 'You are signed up successfully',
-      token,
-    });
+    // 5) redirect the user to home page after signup
+    res.redirect('/');
   }
 );
 export const login = catchAsync(

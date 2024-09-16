@@ -3,20 +3,13 @@ import morgan from 'morgan';
 import { Request, Response, NextFunction } from 'express';
 import { iError } from '../interfaces/iError';
 import cookieParser from 'cookie-parser';
+import multer from 'multer';
 
 export const morganMiddleware = morgan('dev');
 export const bodyParser = express.json();
 export const urlEndcoded = express.urlencoded({ extended: true });
 export const cookiesParser = cookieParser();
 
-// export const handMadeMiddleware = (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   console.log("Good Request");
-//   next();
-// };
 export const globalErrorHandlerMiddleware = (
   error: iError,
   req: Request,

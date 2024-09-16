@@ -2,7 +2,7 @@ extends home
 
 block content
     .signup-form-container
-        form.submit-form(action="/users/signup" method="POST")
+        form.submit-form(action="/users/signup" method="POST" enctype="multipart/form-data")
             h1.form-title Signup
             .first-input-content
                 .input-dev.name-input
@@ -16,8 +16,11 @@ block content
                     label(for="password") Password
                     input.pas(type="password" name="password" placeholder="Enter your password")
                 .input-dev.passConfirm-input
-                    label(for="confirmPassword") confirm password
-                    input.pas(type="password" name="confirmPassword" placeholder="Confirm your password")
+                    label(for="passwordConfirm") confirm password
+                    input.pas(type="password" name="passwordConfirm" placeholder="Confirm your password")
+            .input-dev.file-input
+                    label(for="file") Profile Photo
+                    input(type="file" name="photo" )
             button.form-btn(type='submit') Signup
             .form-footer
                 span Already have an account..?!

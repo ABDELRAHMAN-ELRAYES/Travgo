@@ -1,19 +1,49 @@
 extends home 
 block content 
-    .profile-sec
-        .profile
-            .left-nav 
-                ul
-                    li.left-nav-link
-                            i.fa-light.fa-gear
-                            p SETTINGS
-                    li.left-nav-link 
-                            i.fa-light.fa-suitcase
-                            p MY BOOKINGS
-                    li.left-nav-link 
-                            i.fa-light.fa-star-sharp
-                            p MY REVIEWS
-                    li.left-nav-link 
-                            i.fa-light.fa-wallet
-                            p BILLINGS
-            .profile-content
+        .profile-sec
+                .profile
+                        .left-nav 
+                                ul
+                                        li.left-nav-link
+                                                i.fa-light.fa-gear
+                                                p SETTINGS
+                                        li.left-nav-link 
+                                                i.fa-light.fa-suitcase
+                                                p MY BOOKINGS
+                                        li.left-nav-link 
+                                                i.fa-light.fa-star-sharp
+                                                p MY REVIEWS
+                                        li.left-nav-link 
+                                                i.fa-light.fa-wallet
+                                                p BILLINGS
+                        .profile-content
+                                .settings-sec
+                                        form.info-form(action="" method="")
+                                                .info-content-container
+                                                        h1 ACCOUNT INFORMATION
+                                                        .input-dev.file-input
+                                                                img(src=`/img/users/${user.photo}`, alt=`Photo of ${user.name}`)
+                                                                .h-dev
+                                                                        label(for="file") To change your Photo
+                                                                        input(type="file" name="file" )
+                                                .info-content-container.info-content-container-2
+                                                        .input-dev.name-input
+                                                                label(for="name") Full name
+                                                                input(type="text" name="name" value=`${user.name}` placeholder=`${user.name}`)
+                                                        .input-dev.email-input
+                                                                label(for="email") Email Address
+                                                                input(type="email" name="email" value=`${user.email}` placeholder=`${user.email}`)
+                                                button.btn.save-changes-btn(type='submit') Save Changes
+                                        form.pass-change-form(action="" method="")
+                                                h1 PASSWORD CHANGE
+                                                .input-dev.pass-input
+                                                        label(for="password") Current Password
+                                                        input.pas(type="password" name="password" placeholder="Enter your password")
+                                                .info-content-container-3
+                                                        .input-dev.new-pass-input
+                                                                label(for="password") New Password
+                                                                input.pas(type="password" name="password" placeholder="Enter new password")
+                                                        .input-dev.new-passConfirm-input
+                                                                label(for="confirmPassword") Confirm New Password
+                                                                input.pas(type="password" name="confirmPassword" placeholder="Confirm new password")
+                                                button.btn.save-changes-btn(type='submit') Save Password

@@ -5,6 +5,7 @@ import {
   createNewUser,
   updateUser,
   deleteUser,
+  uploadUserPhotoMiddleware,
 } from './../controllers/userControllers';
 import {
   forgetPassword,
@@ -14,7 +15,7 @@ import {
 
 const userRouter = Router();
 
-userRouter.post('/signup', signup);
+userRouter.post('/signup', uploadUserPhotoMiddleware, signup);
 userRouter.post('/login', login);
 userRouter.post('/privacy/forget-password', forgetPassword);
 

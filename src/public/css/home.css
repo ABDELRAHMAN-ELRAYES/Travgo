@@ -382,6 +382,9 @@ input {
   flex-direction: column;
   /* width: ; */
 }
+.submit-form .file-input {
+  margin-bottom: 2rem;
+}
 .form-footer {
   width: 100%;
   display: flex;
@@ -395,7 +398,7 @@ input {
 }
 .login-form-container,
 .signup-form-container {
-  margin-top: 7rem;
+  margin: 9rem;
   display: flex;
   justify-content: center;
 }
@@ -457,4 +460,73 @@ input {
 
 .profile .left-nav-link:hover::after {
   width: 5px;
+}
+.settings-sec .file-input img {
+  width: 5rem;
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+  height: 5rem;
+}
+.settings-sec {
+  padding: 3rem;
+}
+.info-content-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.info-content-container-2 {
+  justify-content: flex-start;
+  margin-bottom: 0;
+}
+.info-content-container-2 .name-input,
+.info-content-container-3 .new-pass-input {
+  margin-right: 7rem;
+}
+
+.info-content-container-3 {
+  display: flex;
+}
+.settings-sec h1 {
+  margin-bottom: 4rem;
+}
+.info-form {
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--font);
+}
+.settings-sec .input-dev {
+  margin-bottom: 1rem;
+}
+.settings-sec .file-input {
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+}
+.file-input input {
+  margin: 0;
+}
+.file-input .h-dev {
+  display: flex;
+  flex-direction: column;
+}
+.file-input label {
+  padding-left: 1rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+}
+.file-input input::-webkit-file-upload-button {
+  background-color: var(--font);
+  color: var(--main);
+  padding: 10px;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.settings-sec form button {
+  background-color: var(--font);
+  color: var(--main);
+  width: 100%;
+}
+.pass-change-form .input-dev {
+  margin-bottom: 0;
 }

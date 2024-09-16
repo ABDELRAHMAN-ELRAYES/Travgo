@@ -11,8 +11,8 @@ import { isLoggedIn, protect } from '../controllers/authControllers';
 const viewRouter = Router();
 
 viewRouter.route('/').get(isLoggedIn, renderHome);
-viewRouter.route('/shop').get(isLoggedIn, renderShop);
-viewRouter.route('/profile').get(isLoggedIn, renderProfile);
+viewRouter.route('/shop').get(protect,isLoggedIn, renderShop);
+viewRouter.route('/profile').get(protect ,isLoggedIn, renderProfile);
 viewRouter.route('/login').get(renderLogin);
 viewRouter.route('/signup').get(renderSignup);
 
