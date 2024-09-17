@@ -63,7 +63,6 @@ export const renderProfile = catchAsync(
 );
 
 // update user data
-//'user-66e9a0c42ee9aac17a25f004-1726587493849.jpeg
 export const updateUserData = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     req.body.photo = req.file?.filename;

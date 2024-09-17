@@ -20,4 +20,5 @@ viewRouter.route('/signup').get(renderSignup);
 viewRouter
   .route('/submit-user-data')
   .post(protect,uploadUserPhotoMiddleware,updateUserData);
+
 export default viewRouter;

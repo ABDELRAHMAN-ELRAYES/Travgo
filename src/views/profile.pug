@@ -34,18 +34,18 @@ block content
                                                                 label(for="email") Email Address
                                                                 input(type="email" name="email" value=`${user.email}` placeholder=`${user.email}`)
                                                 button.btn.save-changes-btn(type='submit') Save Changes
-                                        form.pass-change-form(action="" method="")
+                                        form.pass-change-form(action="/users/reset-password" method="POST")
                                                 h1 PASSWORD CHANGE
                                                 .input-dev.pass-input
                                                         label(for="password") Current Password
-                                                        input.pas(type="password" name="password" placeholder="Enter your password")
+                                                        input.pas(type="password" name="password" placeholder="Enter your password" required)
                                                 .info-content-container-3
                                                         .input-dev.new-pass-input
-                                                                label(for="password") New Password
-                                                                input.pas(type="password" name="password" placeholder="Enter new password")
+                                                                label(for="newPassword") New Password
+                                                                input.pas(type="password" name="newPassword" placeholder="Enter new password" required)
                                                         .input-dev.new-passConfirm-input
-                                                                label(for="confirmPassword") Confirm New Password
-                                                                input.pas(type="password" name="confirmPassword" placeholder="Confirm new password")
+                                                                label(for="confirmNewPassword") Confirm New Password
+                                                                input.pas(type="password" name="confirmNewPassword" placeholder="Confirm new password" required)
                                                 button.btn.save-changes-btn(type='submit') Save Password
                 form.logout-form(action="/users/logout" method="POST") 
                         button.btn.logout-btn Logout

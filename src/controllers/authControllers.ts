@@ -36,8 +36,9 @@ const createToken = async (res: Response, id: string) => {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
   res.cookie('jwt', token, {
-    expires:
-    new Date(Date.now() + (process.env.COOKIE_EXPIRES_IN as any * 24 * 60 *60* 1000)),
+    expires: new Date(
+      Date.now() + (process.env.COOKIE_EXPIRES_IN as any) * 24 * 60 * 60 * 1000
+    ),
     httpOnly: true,
   });
   return token;
@@ -228,11 +229,41 @@ export const isLoggedIn = async (
 export const logout = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     res.cookie('jwt', 'loggedout', {
-      expires:
-      new Date(Date.now() + (10 * 1000)),
+      expires: new Date(Date.now() + 10 * 1000),
       httpOnly: true,
     });
     res.redirect('/');
+  }
+);
+
+export const changePassword = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    // 1) check if the password is correct for the current user
+
+    const currentUser = await User.findById(req.user._id).select('+password');
+    if (!currentUser) {
+      return next(new ErrorHandler('User is not found!!.', 400));
+    }
+
+    const isVerifiedPassword = await currentUser?.verifyPassword(
+      req.body.password,
+      currentUser.password
+    );
+
+    if (!isVerifiedPassword) {
+      return next(new ErrorHandler('Your Password is not correct!.', 400));
+    }
+    // 2) update the user password using the new password
+
+    currentUser.password = req.body.newPassword;
+    currentUser.passwordConfirm = req.body.confirmNewPassword;
+    currentUser.passwordChangedAt = new Date(Date.now());
+    await currentUser.save();
+    // 3) create new token for user (new login session)
+    const token = await createToken(res, `${currentUser?._id}`.toString());
+
+    //4) redirect the user to profile again
+    res.redirect('/profile');
   }
 );
 
