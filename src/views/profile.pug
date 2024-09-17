@@ -18,14 +18,14 @@ block content
                                                 p BILLINGS
                         .profile-content
                                 .settings-sec
-                                        form.info-form(action="" method="")
+                                        form.info-form(action="/submit-user-data" method="POST"  enctype="multipart/form-data")
                                                 .info-content-container
                                                         h1 ACCOUNT INFORMATION
                                                         .input-dev.file-input
                                                                 img(src=`/img/users/${user.photo}`, alt=`Photo of ${user.name}`)
                                                                 .h-dev
                                                                         label(for="file") To change your Photo
-                                                                        input(type="file" name="file" )
+                                                                        input(type="file" name="photo" )
                                                 .info-content-container.info-content-container-2
                                                         .input-dev.name-input
                                                                 label(for="name") Full name
@@ -47,3 +47,5 @@ block content
                                                                 label(for="confirmPassword") Confirm New Password
                                                                 input.pas(type="password" name="confirmPassword" placeholder="Confirm new password")
                                                 button.btn.save-changes-btn(type='submit') Save Password
+                form.logout-form(action="/users/logout" method="POST") 
+                        button.btn.logout-btn Logout

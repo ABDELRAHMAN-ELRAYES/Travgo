@@ -413,6 +413,14 @@ input {
   place-items: center;
   padding: 3rem 0;
 }
+.profile-sec .logout-form {
+  width: 75rem;
+  margin-top: 5rem;
+}
+.profile-sec .logout-btn {
+  border: 1px solid red;
+  color: red;
+}
 .profile {
   width: 75rem;
   min-height: 45rem;

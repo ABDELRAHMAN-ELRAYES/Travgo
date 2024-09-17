@@ -3,12 +3,17 @@ import morgan from 'morgan';
 import { Request, Response, NextFunction } from 'express';
 import { iError } from '../interfaces/iError';
 import cookieParser from 'cookie-parser';
-import multer from 'multer';
+import { createMulterMiddleware } from '../middlewares/uploadUserImage';
+
 
 export const morganMiddleware = morgan('dev');
 export const bodyParser = express.json();
 export const urlEndcoded = express.urlencoded({ extended: true });
 export const cookiesParser = cookieParser();
+export const uploadUserPhotoMiddleware = createMulterMiddleware(
+  'users',
+  'photo'
+);
 
 export const globalErrorHandlerMiddleware = (
   error: iError,

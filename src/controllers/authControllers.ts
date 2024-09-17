@@ -35,7 +35,11 @@ const createToken = async (res: Response, id: string) => {
   const token = await jwt.sign({ id }, <string>process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
-  res.cookie('jwt', token);
+  res.cookie('jwt', token, {
+    expires:
+    new Date(Date.now() + (process.env.COOKIE_EXPIRES_IN as any * 24 * 60 *60* 1000)),
+    httpOnly: true,
+  });
   return token;
 };
 
@@ -221,6 +225,17 @@ export const isLoggedIn = async (
   }
   next();
 };
+export const logout = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.cookie('jwt', 'loggedout', {
+      expires:
+      new Date(Date.now() + (10 * 1000)),
+      httpOnly: true,
+    });
+    res.redirect('/');
+  }
+);
+
 export const forgetPassword = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {}
 );
