@@ -33,7 +33,8 @@ block content
             .tour-right-information
                 h1 Tour Description
                 p.tour-description= tour.description
+            .map-overlay
             .tour-images 
                 each img in tour.images 
                     img(src=`/img/tours/${img}`, alt="")
-        .tour-map-locations#map 
+        .tour-map-locations#map(data-locations=`${JSON.stringify(tour.locations)}`)
