@@ -1,9 +1,31 @@
 extends home
 block content 
     section.tours-sec
-                h1.tours-title(style="margin-top:7rem") All Tours 
+                form.search-container(action="/tours/search-tours" method="POST")
+                    .first-filter
+                        - const availablePriceRange = [1000,2000,3000,4000,5000];
+                        <label for="price">Proper Price</label>
+                        <select id="price" name="price">
+                            each price in availablePriceRange
+                                <option>#{price}</option>
+                        </select>
+                    .second-filter 
+                        - const rates = [3.5,3.9,4,4.3,4.6,5];
+                        <label for="rate">Proper rate</label>
+                        <select id="rate" name="rate">
+                            each rate in rates
+                                <option>#{rate}</option>
+                        </select>
+                    .third-filter 
+                        <label for="checkIn">Check in</label>
+                        input(type="date" name="checkIn")
+                    .fourth-filter
+                        <label for="checkOut">Check out</label>
+                        input(type="date" name="checkOut")
+                    button.btn.search-btn(type="submit") Search
+                h1.tours-title(style="margin-top:5rem") All Tours 
                 .tours-content
                     each tour in tours
                         - let date = new Date(tour.startDates[0]).toLocaleDateString('en-US', {  year: 'numeric',  month: 'long', day: 'numeric',});
-                        +tourCard(tour.name,tour.summary,tour.ratingsAverage,tour.ratingsQuantity,tour.price,tour.startLocation.description,tour.maxGroupSize,tour.imageCover,date,tour.locations.length)
+                        +tourCard(tour.name,tour.summary,tour.ratingsAverage,tour.ratingsQuantity,tour.price,tour.startLocation.description,tour.maxGroupSize,tour.imageCover,date,tour.locations.length,tour.slug)
                 

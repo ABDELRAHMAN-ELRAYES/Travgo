@@ -25,6 +25,7 @@ app.use(cookiesParser);
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+
 // setup the static files
 app.use(express.static(path.join(__dirname, 'public')));
 

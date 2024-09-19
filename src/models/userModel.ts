@@ -1,10 +1,8 @@
-import mongoose, { Schema, model, Document } from 'mongoose';
+import  { Schema, model } from 'mongoose';
 import validator from 'validator';
 import { userDoc } from '../interfaces/userDoc';
 import bycrypt from 'bcryptjs';
-import { promisify } from 'util';
 import crypto from 'crypto';
-import { ErrorHandler } from '../utils/error';
 
 const userSchema = new Schema<userDoc>({
   name: {

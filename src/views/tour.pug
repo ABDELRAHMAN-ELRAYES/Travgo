@@ -1,0 +1,39 @@
+extends home 
+block content 
+    .tour
+        .tour-img-overlay
+            img.tour-profile-picture(src=`/img/tours/${tour.imageCover}`, alt="")
+            .img-overlay
+            h1.tour-name=tour.name
+            .tour-img-cover
+        .tour-information 
+            .tour-left-information
+                .icons
+                    .icon
+                        i.fa-solid.fa-location-dot
+                        p.tour-location=tour.startLocation.description 
+                    .icon
+                        i.fa-regular.fa-flag
+                        p.tour-stops=`${tour.locations.length} `
+                            span.highlighted-card-word stops
+                    .icon
+                        i.fa-solid.fa-calendar-days
+                        - let date = new Date(tour.startDates[0]).toLocaleDateString('en-US', {  year: 'numeric',  month: 'long', day: 'numeric',});
+                        p.tour-start-date=date
+                    .icon    
+                        i.fa-solid.fa-person
+                        p.tour-group-size=`${tour.maxGroupSize} `
+                            span.highlighted-card-word people
+                .tour-guides 
+                    h3 Tour Guides
+                    each guide in tour.guides
+                        .tour-guide
+                            img(src=`/img/users/${guide.photo}`, alt="")
+                            p #{guide.name}
+            .tour-right-information
+                h1 Tour Description
+                p.tour-description= tour.description
+            .tour-images 
+                each img in tour.images 
+                    img(src=`/img/tours/${img}`, alt="")
+        .tour-map-locations#map 

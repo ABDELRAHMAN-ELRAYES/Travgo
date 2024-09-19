@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-import validator from "validator";
-import tourRouter from "../routes/toursRoute";
+import mongoose, { Schema, model } from 'mongoose';
+import validator from 'validator';
+import slugify from 'slugify';
 
-const locationSchema = new mongoose.Schema({
+const locationSchema = new Schema({
   description: String,
   type: String,
   coordinates: [Number],
@@ -26,19 +26,25 @@ const tourSchema = new mongoose.Schema(
     startDates: [Date],
     name: {
       type: String,
-      required: [true, "A tour must have a name"],
+      required: [true, 'A tour must have a name'],
     },
     duration: {
       type: Number,
     },
     maxGroupSize: Number,
     difficulty: String,
-    guides: [String],
+    guides: [
+      {
+        ref: 'User',
+        type: mongoose.Types.ObjectId,
+      },
+    ],
     price: Number,
     summary: String,
     description: String,
     imageCover: String,
     locations: [locationSchema],
+    slug: String,
   },
   {
     toJSON: { virtuals: true },
@@ -46,14 +52,17 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
-tourSchema.virtual("TestVirtualProps").get(function (this: any) {
-  return this.name;
-});
-
-tourSchema.pre("updateOne", (next) => {
-  console.log("updated successfully");
+// tourSchema.virtual("TestVirtualProps").get(function (this: any) {
+//   return this.name;
+// });
+tourSchema.pre('save', function (next) {
+  this.slug = slugify(this.name);
   next();
 });
-const Tour = mongoose.model("Tour", tourSchema);
+tourSchema.pre('updateOne', (next) => {
+  console.log('updated successfully');
+  next();
+});
+const Tour = model('Tour', tourSchema);
 
 export default Tour;

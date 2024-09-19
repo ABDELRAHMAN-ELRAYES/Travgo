@@ -11,6 +11,7 @@ export const getTour = catchAsync(
       res.status(404).send('not valid id');
     }
 
+    // const tour = await Tour.findById(req.params.id);
     const tour = await Tour.findById(req.params.id);
 
     if (!tour) {
@@ -28,7 +29,7 @@ export const getTour = catchAsync(
 
 export const getAllTours = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const query = Tour.find();
+    const query = Tour.find().populate('guides', '-_id name photo');
 
     if (Object.keys(req.query).length) {
       const apiFeatures = new APIFeatures(query, req.query).filter().sort();
@@ -92,6 +93,14 @@ export const deleteTour = catchAsync(
     res.status(200).json({
       status: 'success',
       tour: deletedTour,
+    });
+  }
+);
+
+export const searchForTours = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.json({
+      status: 'success',
     });
   }
 );
