@@ -1,8 +1,9 @@
-import mongoose, { Schema, model } from 'mongoose';
+import mongoose, { Mongoose, Schema, model } from 'mongoose';
 import Tour from './tourModel';
 import { iReview } from '../interfaces/iReview';
+import { scheduler } from 'timers/promises';
 
-const reviewSchema = new Schema<iReview>({
+const reviewSchema = new Schema({
   review: {
     type: String,
     required: [true, 'The review must have a description'],
@@ -13,9 +14,11 @@ const reviewSchema = new Schema<iReview>({
     max: 5,
   },
   tour: {
+    ref: 'Tour',
     type: Schema.ObjectId,
   },
   user: {
+    ref: 'User',
     type: Schema.ObjectId,
   },
   createdAt: {
@@ -24,7 +27,7 @@ const reviewSchema = new Schema<iReview>({
   },
 });
 
-reviewSchema.methods.calculateRatings = async function (tourId: string) {
+reviewSchema.statics.calculateRatings = async function (tourId: string) {
   const reviews = await this.aggregate([
     { $match: { tour: tourId } },
     {
@@ -36,13 +39,21 @@ reviewSchema.methods.calculateRatings = async function (tourId: string) {
     },
   ]);
 
-  await Tour.findByIdAndUpdate(tourId, {
-    ratingsAverage: reviews.ratingsAverage,
-    ratingsQuantity: reviews.ratingsQuantity,
-  });
+  if (reviews.length > 0) {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsAverage: reviews[0].ratingsAverage,
+      ratingsQuantity: reviews[0].ratingsQuantity,
+    });
+  } else {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsAverage: 4.5,
+      ratingsQuantity: 0,
+    });
+  }
 };
-reviewSchema.post<iReview>('save',function(){
-    (this.constructor as any).calculateRatings(this.tour);
-})
+reviewSchema.post<iReview>('save', function () {
+  (this.constructor as any).calculateRatings(this.tour);
+});
 const Review = model('Review', reviewSchema);
+
 export default Review;

@@ -697,7 +697,8 @@ select:focus {
   width: 100%;
   height: 60rem;
   margin-top: 5rem;
-  position: relative;   margin-bottom: 15rem;
+  position: relative;
+  margin-bottom: 15rem;
 }
 .map-overlay {
   width: 110%;
@@ -711,4 +712,20 @@ select:focus {
 }
 .leaflet-touch .leaflet-control-attribution {
   display: none;
+}
+.tour-reviews {
+  width: 100%;
+  height: 15rem;
+  background: var(--font);
+  padding: 4rem 4rem;
+  align-items: center;
+  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  row-gap: 5rem;
+}
+.tour-review {
+  width: 15rem;
+  height: 15rem;
+  background-color: var(--main);
 }

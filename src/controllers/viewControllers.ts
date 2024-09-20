@@ -17,6 +17,8 @@ export const renderHomeWithUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const user = req.user;
     const tours = await Tour.find().limit(3);
+    console.log(tours);
+
     res.status(200).render('home', {
       title: 'Home',
       tours,

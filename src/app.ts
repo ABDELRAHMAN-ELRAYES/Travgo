@@ -9,7 +9,7 @@ import {
 import tourRouter from './routes/toursRoute';
 import userRouter from './routes/userRoute';
 import viewRouter from './routes/viewRoutes';
-
+import reviewRouter from './routes/reviews';
 import { ErrorHandler } from './utils/error';
 import path from 'path';
 
@@ -25,7 +25,6 @@ app.use(cookiesParser);
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-
 // setup the static files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -33,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', viewRouter);
 app.use('/tours', tourRouter);
 app.use('/users', userRouter);
+app.use('/reviews', reviewRouter);
 
 // the alternative if all routes not found
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
