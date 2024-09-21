@@ -626,6 +626,7 @@ select:focus {
 .tour .tour-information {
   width: 100%;
   height: fit-content;
+  min-height: 44rem;
   background: #ffff;
   padding: 4rem;
   display: grid;
@@ -709,6 +710,13 @@ select:focus {
   bottom: -71rem;
   left: -2rem;
   transform: rotate(-7deg);
+  display: flex;
+  align-items: center;
+  padding-left: 22rem;
+}
+.map-overlay h1 {
+  width: fit-content;
+  font-size: 5rem;
 }
 .leaflet-touch .leaflet-control-attribution {
   display: none;
@@ -723,9 +731,57 @@ select:focus {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   row-gap: 5rem;
+  margin-top: 16rem;
+  margin-bottom: 5rem;
 }
 .tour-review {
   width: 15rem;
   height: 15rem;
   background-color: var(--main);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+.tour-review img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+.tour-review .user-name {
+  font-weight: 1000;
+  margin-bottom: 2rem;
+}
+.tour-review-rev {
+  color: #151515b5;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.create-review-form {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: var(--font);
+  color: var(--main);
+  position: absolute;
+  top: 163rem;
+  right: 0rem;
+  width: 100%;
+  padding-top: 18rem;
+  padding-right: 3rem;
+}
+.create-review-form button {
+  border: 1px solid var(--main);
+  color: var(--main);
+}
+.create-review-form .review-input {
+  margin-right: 1rem;
+}
+.create-review-form .rating-input {
+  margin-right: 3rem;
+}
+.create-review-form .rating-input input {
+  width: 7rem;
 }

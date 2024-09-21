@@ -8,7 +8,7 @@ const locationSchema = new Schema({
   coordinates: [Number],
   day: Number,
 });
-const tourSchema = new mongoose.Schema(
+const tourSchema = new Schema(
   {
     startLocation: {
       description: {
@@ -20,7 +20,10 @@ const tourSchema = new mongoose.Schema(
       coordinates: [Number],
       address: String,
     },
-    ratingsAverage: Number,
+    ratingsAverage: {
+      type: Number,
+      set: (val: number) => Math.round(val * 10) / 10,
+    },
     ratingsQuantity: Number,
     images: [String],
     startDates: [Date],
@@ -52,11 +55,14 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
-// tourSchema.virtual("TestVirtualProps").get(function (this: any) {
-//   return this.name;
-// });
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id',
+});
+
 tourSchema.pre('save', function (next) {
-  this.slug = slugify(this.name);
+  this.slug = slugify(this.name, { lower: true });
   next();
 });
 tourSchema.pre('updateOne', (next) => {

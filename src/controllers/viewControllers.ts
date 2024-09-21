@@ -66,10 +66,9 @@ export const renderProfile = catchAsync(
 // render tour profile page
 export const renderTourProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const tour = await Tour.findOne({ slug: req.params.slug }).populate(
-      'guides',
-      '-_id name photo'
-    );
+    const tour = await Tour.findOne({ slug: req.params.slug })
+      .populate('guides', '-_id name photo role')
+      .populate('reviews', 'review rating user');
     res.status(200).render('tour', {
       title: 'Profile',
       tour,

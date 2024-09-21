@@ -1,7 +1,6 @@
-import mongoose, { Mongoose, Schema, model } from 'mongoose';
+import mongoose, { Query, Schema, model } from 'mongoose';
 import Tour from './tourModel';
 import { iReview } from '../interfaces/iReview';
-import { scheduler } from 'timers/promises';
 
 const reviewSchema = new Schema({
   review: {
@@ -26,15 +25,20 @@ const reviewSchema = new Schema({
     default: Date.now(),
   },
 });
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+reviewSchema.pre(/^find/, function (this: Query<any, iReview>, next) {
+  this.populate('user', 'name photo');
+  next();
+});
 
 reviewSchema.statics.calculateRatings = async function (tourId: string) {
   const reviews = await this.aggregate([
-    { $match: { tour: tourId } },
+    { $match: { tour: new mongoose.Types.ObjectId(tourId) } },
     {
       $group: {
         _id: '$tour',
         ratingsQuantity: { $sum: 1 },
-        ratingsAverage: { $avg: 'rating' },
+        ratingsAverage: { $avg: '$rating' },
       },
     },
   ]);
@@ -51,9 +55,10 @@ reviewSchema.statics.calculateRatings = async function (tourId: string) {
     });
   }
 };
-reviewSchema.post<iReview>('save', function () {
-  (this.constructor as any).calculateRatings(this.tour);
+reviewSchema.post<iReview>('save', function (this: any) {
+  this.constructor.calculateRatings(this.tour);
 });
+
 const Review = model('Review', reviewSchema);
 
 export default Review;

@@ -35,7 +35,7 @@ export const getAllTours = catchAsync(
       const apiFeatures = new APIFeatures(query, req.query).filter().sort();
     }
     const tours = await query;
-
+   
     if (!tours) {
       return next(new ErrorHandler('tour not found', 404));
     }

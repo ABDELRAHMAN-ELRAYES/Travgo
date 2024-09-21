@@ -30,13 +30,28 @@ block content
                         .tour-guide
                             img(src=`/img/users/${guide.photo}`, alt="")
                             p #{guide.name}
+                                 span.highlighted-card-word(style="padding-left:0.5rem") #{guide.role}
             .tour-right-information
                 h1 Tour Description
                 p.tour-description= tour.description
             .map-overlay
+                h1.review-title Review Tour & Clients Reviews
             .tour-images 
                 each img in tour.images 
                     img(src=`/img/tours/${img}`, alt="")
         .tour-map-locations#map(data-locations=`${JSON.stringify(tour.locations)}`)
+        form.create-review-form(action=`/tours/${tour._id}/reviews` method="POST")
+            .input-dev.review-input
+                    label(for="review") Review
+                    input(type="text" name="review" placeholder="write your review")
+            .input-dev.rating-input
+                    label(for="rating") Rating
+                    input(type="double" name="rating" placeholder="Rate Tour")
+            button.btn.create-review-btn(type="submit") Review
         .tour-reviews 
-            
+            each review in tour.reviews
+                .tour-review 
+                    img(src=`/img/users/${review.user.photo}`, alt="")
+                    .user-name= review.user.name
+                    p.tour-review-rev= review.review 
+                    p= review.rating
