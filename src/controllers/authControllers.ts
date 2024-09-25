@@ -1,12 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { catchAsync } from '../utils/catchAsync';
-import { User } from './../models/userModel';
+import User from './../models/userModel';
 import { ErrorHandler } from '../utils/error';
 import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
 import Tour from '../models/tourModel';
 import { sendMail, transporter, options } from './../utils/email';
-import { title } from 'process';
 
 /* 
 
@@ -135,6 +134,7 @@ const verifyToken = promisify(
 
 export const protect = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    console.log('from protect middleware');
     // 1) check if there is a token
     if (!req.cookies.jwt) {
       return next(

@@ -3,6 +3,7 @@ import { catchAsync } from '../utils/catchAsync';
 import Review from './../models/reviewModel';
 import mongoose from 'mongoose';
 import Tour from '../models/tourModel';
+import { ErrorHandler } from '../utils/error';
 
 export const setTourUserRequestId = (
   req: Request,
@@ -34,8 +35,29 @@ export const getAllReviews = catchAsync(
     });
   }
 );
+export const getAllReviewsForUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const reviews = await Review.find({ user: req.user._id }).populate({
+      path: 'tour',
+      select:'name imageCover'
+    });
+    res.status(200).json({
+      status: 'success',
+      results: reviews.length,
+      reviews,
+    });
+  }
+);
+
 export const createNewReview = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    const previousReview = await Review.find({
+      tour: req.body.tour,
+      user: req.body.user,
+    });
+    if (previousReview.length > 0) {
+      return next(new ErrorHandler('You already reviewed this tour !.', 401));
+    }
     req.body.rating = req.body.rating as number;
     const review = await Review.create(req.body);
 
@@ -44,6 +66,7 @@ export const createNewReview = catchAsync(
     res.redirect(`/tour/${tour?.slug}`);
   }
 );
+
 export const updateReview = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const review = await Review.findByIdAndUpdate(req.params.id, req.body);

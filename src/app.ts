@@ -12,6 +12,8 @@ import viewRouter from './routes/viewRoutes';
 import reviewRouter from './routes/reviews';
 import { ErrorHandler } from './utils/error';
 import path from 'path';
+import bookingRouter from './routes/bookingRoutes';
+import cors from 'cors';
 
 const app = express();
 
@@ -20,6 +22,9 @@ app.use(morganMiddleware);
 app.use(urlEndcoded);
 app.use(bodyParser);
 app.use(cookiesParser);
+
+const url = `http://localhost:3000`;
+app.use(cors({ origin: url }));
 
 // setup the view engine
 app.set('view engine', 'pug');
@@ -30,9 +35,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // all routers
 app.use('/', viewRouter);
-app.use('/tours', tourRouter);
 app.use('/users', userRouter);
+app.use('/tours', tourRouter);
 app.use('/reviews', reviewRouter);
+app.use('/bookings', bookingRouter);
 
 // the alternative if all routes not found
 app.all('*', (req: Request, res: Response, next: NextFunction) => {

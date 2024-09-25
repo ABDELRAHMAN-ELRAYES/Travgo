@@ -4,48 +4,49 @@ block content
                 .profile
                         .left-nav 
                                 ul
-                                        li.left-nav-link
+                                        li.left-nav-link(data-profile-section="settings-sec")
                                                 i.fa-light.fa-gear
-                                                p SETTINGS
-                                        li.left-nav-link 
+                                                a(href="/profile") SETTINGS
+                                        li.left-nav-link(data-profile-section="bookings-sec")
                                                 i.fa-light.fa-suitcase
-                                                p MY BOOKINGS
-                                        li.left-nav-link 
+                                                a(href="/profile/bookings") MY BOOKINGS
+                                        li.left-nav-link(data-profile-section="reviews-sec")
                                                 i.fa-light.fa-star-sharp
-                                                p MY REVIEWS
-                                        li.left-nav-link 
+                                                a(href="/profile/reviews") MY REVIEWS
+                                        li.left-nav-link(data-profile-section="billings-sec")
                                                 i.fa-light.fa-wallet
-                                                p BILLINGS
+                                                a(href="/profile/billings") BILLINGS
                         .profile-content
-                                .settings-sec
-                                        form.info-form(action="/submit-user-data" method="POST"  enctype="multipart/form-data")
-                                                .info-content-container
-                                                        h1 ACCOUNT INFORMATION
-                                                        .input-dev.file-input
-                                                                img(src=`/img/users/${user.photo}`, alt=`Photo of ${user.name}`)
-                                                                .h-dev
-                                                                        label(for="file") To change your Photo
-                                                                        input(type="file" name="photo" )
-                                                .info-content-container.info-content-container-2
-                                                        .input-dev.name-input
-                                                                label(for="name") Full name
-                                                                input(type="text" name="name" value=`${user.name}` placeholder=`${user.name}`)
-                                                        .input-dev.email-input
-                                                                label(for="email") Email Address
-                                                                input(type="email" name="email" value=`${user.email}` placeholder=`${user.email}`)
-                                                button.btn.save-changes-btn(type='submit') Save Changes
-                                        form.pass-change-form(action="/users/reset-password" method="POST")
-                                                h1 PASSWORD CHANGE
-                                                .input-dev.pass-input
-                                                        label(for="password") Current Password
-                                                        input.pas(type="password" name="password" placeholder="Enter your password" required)
-                                                .info-content-container-3
-                                                        .input-dev.new-pass-input
-                                                                label(for="newPassword") New Password
-                                                                input.pas(type="password" name="newPassword" placeholder="Enter new password" required)
-                                                        .input-dev.new-passConfirm-input
-                                                                label(for="confirmNewPassword") Confirm New Password
-                                                                input.pas(type="password" name="confirmNewPassword" placeholder="Confirm new password" required)
-                                                button.btn.save-changes-btn(type='submit') Save Password
+                                block profileSection
+                                        .profile-section.settings-sec
+                                                form.info-form(action="/submit-user-data" method="POST"  enctype="multipart/form-data")
+                                                        .info-content-container
+                                                                h1 ACCOUNT INFORMATION
+                                                                .input-dev.file-input
+                                                                        img(src=`/img/users/${user.photo}`, alt=`Photo of ${user.name}`)
+                                                                        .h-dev
+                                                                                label(for="file") To change your Photo
+                                                                                input(type="file" name="photo" )
+                                                        .info-content-container.info-content-container-2
+                                                                .input-dev.name-input
+                                                                        label(for="name") Full name
+                                                                        input(type="text" name="name" value=`${user.name}` placeholder=`${user.name}`)
+                                                                .input-dev.email-input
+                                                                        label(for="email") Email Address
+                                                                        input(type="email" name="email" value=`${user.email}` placeholder=`${user.email}`)
+                                                        button.btn.save-changes-btn(type='submit') Save Changes
+                                                form.pass-change-form(action="/users/reset-password" method="POST")
+                                                        h1 PASSWORD CHANGE
+                                                        .input-dev.pass-input
+                                                                label(for="password") Current Password
+                                                                input.pas(type="password" name="password" placeholder="Enter your password" required)
+                                                        .info-content-container-3
+                                                                .input-dev.new-pass-input
+                                                                        label(for="newPassword") New Password
+                                                                        input.pas(type="password" name="newPassword" placeholder="Enter new password" required)
+                                                                .input-dev.new-passConfirm-input
+                                                                        label(for="confirmNewPassword") Confirm New Password
+                                                                        input.pas(type="password" name="confirmNewPassword" placeholder="Confirm new password" required)
+                                                        button.btn.save-changes-btn(type='submit') Save Password
                 form.logout-form(action="/users/logout" method="POST") 
                         button.btn.logout-btn Logout

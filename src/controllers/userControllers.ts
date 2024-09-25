@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { catchAsync } from '../utils/catchAsync';
-import { User } from './../models/userModel';
+import  User  from './../models/userModel';
 
 
 export const getUser = catchAsync(

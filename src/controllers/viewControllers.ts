@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import Tour from '../models/tourModel';
-import { User } from '../models/userModel';
-
+import User from '../models/userModel';
+import Review from '../models/reviewModel';
 // render the home page with the overview tours
 export const renderHome = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -98,5 +98,31 @@ export const updateUserData = catchAsync(
     //   user: req.user,
     // });
     res.redirect('/profile');
+  }
+);
+export const renderUserReviews = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const reviews = await Review.find({ user: req.user._id }).populate({
+      path: 'tour',
+      select: 'name imageCover',
+    });
+    res.status(200).render('_reviewsSection', {
+      title: 'Profile | Reviews',
+      reviews,
+    });
+  }
+);
+export const renderUserBookings = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).render('_bookingsSection', {
+      title: 'Profile | Bookings',
+    });
+  }
+);
+export const renderUserBillings = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).render('_billingsSection', {
+      title: 'Profile | Billings',
+    });
   }
 );

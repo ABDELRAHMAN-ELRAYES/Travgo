@@ -1,0 +1,20 @@
+extends profile 
+
+block profileSection
+    .profile-section.reviews-sec
+        h1 Your Reviews
+        each review in reviews 
+            .review-card 
+                img(src=`/img/tours/${review.tour.imageCover}`, alt="")
+                .review-card-data 
+                    h2 #{review.tour.name} 
+                    .review
+                        p.word Review:  
+                        p #{review.review} 
+                    .rating 
+                        p.word Rating:
+                        p #{review.rating} 
+                            span.word /5
+                .review-card-btns 
+                    a.btn.del-review(href="") Delete
+                    a.btn.update-review(href="") Modify

@@ -43,10 +43,10 @@ block content
         form.create-review-form(action=`/tours/${tour._id}/reviews` method="POST")
             .input-dev.review-input
                     label(for="review") Review
-                    input(type="text" name="review" placeholder="write your review")
+                    input.tour-review-input(type="text" name="review" placeholder="write your review")
             .input-dev.rating-input
                     label(for="rating") Rating
-                    input(type="double" name="rating" placeholder="Rate Tour")
+                    input.tour-review-rating-input(type="double" name="rating" placeholder="Rate Tour")
             button.btn.create-review-btn(type="submit") Review
         .tour-reviews 
             each review in tour.reviews
@@ -54,4 +54,19 @@ block content
                     img(src=`/img/users/${review.user.photo}`, alt="")
                     .user-name= review.user.name
                     p.tour-review-rev= review.review 
-                    p= review.rating
+                    p.tour-review-rating= review.rating
+        .tour-payment 
+            img(src="/img/icon/logo.png", alt="")
+            .payment-title 
+                h2 WHAT ARE YOU WAITING FOR ?!
+                P Adventure, infinite Memories, Make it yours today!.
+                html(lang="en")
+                    head
+                        meta(charset="UTF-8")
+                        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+                        title Document
+                    body 
+            if user 
+                button.btn.pay-btn#pay-for-tour(type="submit" data-tour-id=`${tour._id}`) Book Tour Now! 
+            else 
+                a.btn.tour-login-btn(href=`/login`) Login To Book Tour!

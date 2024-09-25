@@ -4,6 +4,9 @@ import {
   renderHomeWithUser,
   renderLogin,
   renderProfile,
+  renderUserReviews,
+  renderUserBookings,
+  renderUserBillings,
   renderShop,
   renderSignup,
   renderTourProfile,
@@ -15,10 +18,15 @@ const viewRouter = Router();
 
 viewRouter.route('/').get(isLoggedIn, renderHome);
 viewRouter.route('/shop').get(protect, isLoggedIn, renderShop);
-viewRouter.route('/profile').get(protect, isLoggedIn, renderProfile);
 viewRouter.route('/login').get(renderLogin);
 viewRouter.route('/signup').get(renderSignup);
-viewRouter.route('/tour/:slug').get(isLoggedIn,renderTourProfile);
+viewRouter.route('/tour/:slug').get(isLoggedIn, renderTourProfile);
+
+// viewRouter.use(protect, isLoggedIn);
+viewRouter.route('/profile').get(protect, isLoggedIn, renderProfile);
+viewRouter.get('/profile/reviews', protect, isLoggedIn, renderUserReviews);
+viewRouter.get('/profile/bookings', protect, isLoggedIn, renderUserBookings);
+viewRouter.get('/profile/billings', protect, isLoggedIn, renderUserBillings);
 
 viewRouter
   .route('/submit-user-data')

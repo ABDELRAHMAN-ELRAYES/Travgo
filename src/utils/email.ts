@@ -1,9 +1,9 @@
-import nodemailer from 'nodemailer';
+import nodemailer, { Transporter, SendMailOptions } from 'nodemailer';
 import { catchAsync } from './catchAsync';
 export const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  host: 'smtp.gmail.com',
-  port: 587,
+  service: process.env.MAIL_SERVICE,
+  host: process.env.MAIL_HOST,
+  port:(process.env.MAIL_PORT || 587) as number,
   secure: false,
   auth: {
     user: process.env.COMPANY_GMAIL,
@@ -18,8 +18,8 @@ export const options = {
   html: '<b>Hello world?</b>',
 };
 export const sendMail = async (
-  transporter: nodemailer.Transporter,
-  options: nodemailer.SendMailOptions
+  transporter: Transporter,
+  options: SendMailOptions
 ) => {
   console.log('Sending email...');
   await transporter.sendMail(options);

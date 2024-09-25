@@ -303,11 +303,12 @@ nav .user-info p {
   width: 7rem;
 }
 .btns .tour-detail-btn {
-  width: 5rem;
   margin-right: 0.5rem;
   background: transparent;
-  color: var(--main);
-  border: 1px solid var(--main);
+  color: var(--font);
+  background-color: var(--main);
+  width: fit-content;
+  padding: 0 1rem;
 }
 .card-form {
   display: flex;
@@ -357,6 +358,7 @@ footer .logo {
   box-shadow: 0 4px 30px var(--font);
   backdrop-filter: blur(5.5px);
   -webkit-backdrop-filter: blur(5.5px);
+  margin-bottom: 3rem;
 }
 input {
   padding: 0 1rem;
@@ -455,21 +457,52 @@ input {
   cursor: pointer;
   position: relative;
 }
-
-.profile .left-nav-link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
+.profile .left-nav-link a {
+  color: var(--main);
+  width: 100%;
   height: 100%;
-  width: 0;
-  transition: 0.5s;
-  background-color: var(--first-con);
 }
 
+.profile .left-nav-link::after,
+.profile .left-nav-link::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  transition: 0.5s;
+  left: 0;
+  /* background-color: var(--first-con); */
+  background-color: var(--main);
+}
+.profile .left-nav-link::after {
+  height: 100%;
+  top: 0;
+}
+
+.profile .left-nav-link::before {
+  height: 1px;
+  width: 0;
+  bottom: 0;
+}
 .profile .left-nav-link:hover::after {
   width: 5px;
 }
+
+.profile .left-nav-link:hover::before {
+  width: 60%;
+}
+.profile-section {
+  height: 48rem;
+  width: 50rem;
+  padding: 3rem;
+  overflow-y: scroll;
+}
+.profile-section::-webkit-scrollbar {
+  display: none;
+}
+.hide-profile-section {
+  display: none;
+}
+
 .settings-sec .file-input img {
   width: 5rem;
   border-radius: 0.5rem;
@@ -752,7 +785,7 @@ select:focus {
 }
 .tour-review .user-name {
   font-weight: 1000;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .tour-review-rev {
   color: #151515b5;
@@ -784,4 +817,102 @@ select:focus {
 }
 .create-review-form .rating-input input {
   width: 7rem;
+}
+.tour-review-rating {
+  font-weight: 1000;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--font);
+  display: grid;
+  place-items: center;
+  border-radius: 0.5rem;
+}
+.tour-payment {
+  padding: 2rem;
+  width: 50rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--font);
+  color: var(--main);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 8rem;
+  position: relative;
+  transform: translateX(30rem);
+}
+.tour-payment img {
+  width: 10rem;
+  position: absolute;
+  left: -3rem;
+  transform: rotate(23deg);
+}
+.tour-payment .payment-title h2 {
+  font-weight: 1000;
+}
+.tour-payment .pay-btn,
+.tour-payment .tour-login-btn {
+  background: var(--main);
+  width: fit-content;
+  padding: 0 2rem;
+}
+.tour-payment .tour-login-btn {
+  display: grid;
+  place-items: center;
+}
+/*! profile sections */
+.reviews-sec h1 {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  padding: 2rem 0;
+  font-size: 2.5rem;
+}
+.reviews-sec .review-card {
+  background: var(--font);
+  color: var(--main);
+  border-radius: 0.5rem;
+  display: flex;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+}
+.review-card .review-card-data {
+  margin: 0 2rem;
+}
+.review-card .review-card-data h2 {
+  margin-bottom: 0.5rem;
+}
+.review-card .review,
+.review-card .rating {
+  display: flex;
+}
+.review-card .word,
+.review-card-data .highlighted-card-word {
+  color: red;
+  margin-right: 0.5rem;
+}
+.review-card img {
+  height: 10rem;
+  border-radius: 0.5rem;
+}
+.review-card-btns {
+  width: 9rem;
+  height: fit-content;
+  flex-direction: column;
+  display: flex;
+}
+.review-card-btns .del-review {
+  color: var(--main);
+  background-color: red;
+  margin-bottom: 0.25rem;
+  display: grid;
+  place-items: center;
+}
+.review-card-btns .update-review {
+  color: var(--main);
+  background-color: var(--contrast);
+  display: grid;
+  place-items: center;
 }

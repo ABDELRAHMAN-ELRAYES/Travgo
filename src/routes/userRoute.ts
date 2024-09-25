@@ -19,8 +19,8 @@ import { uploadUserPhotoMiddleware } from '../middlewares/middlewares';
 
 const userRouter = Router();
 
-userRouter.post('/signup', uploadUserPhotoMiddleware, signup);
 userRouter.post('/login', login);
+userRouter.post('/signup', uploadUserPhotoMiddleware, signup);
 userRouter.post('/logout', isLoggedIn, logout);
 userRouter.post('/reset-password', protect, changePassword);
 

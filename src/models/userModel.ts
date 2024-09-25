@@ -1,4 +1,4 @@
-import  { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import validator from 'validator';
 import { userDoc } from '../interfaces/userDoc';
 import bycrypt from 'bcryptjs';
@@ -47,7 +47,7 @@ const userSchema = new Schema<userDoc>({
     select: false,
   },
 });
-// hashing the users password 
+// hashing the users password
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bycrypt.hash(this.password, 12);
@@ -83,4 +83,5 @@ userSchema.methods.createResetPasswordToken = function () {
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
   return this.passwordResetToken;
 };
-export const User = model<userDoc>('User', userSchema);
+const User = model<userDoc>('User', userSchema);
+export default User;
