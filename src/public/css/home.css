@@ -873,6 +873,7 @@ select:focus {
   color: var(--main);
   border-radius: 0.5rem;
   display: flex;
+  flex-direction: column;
   margin-bottom: 1rem;
   justify-content: space-between;
   align-items: center;
@@ -902,6 +903,7 @@ select:focus {
   height: fit-content;
   flex-direction: column;
   display: flex;
+  width: fit-content;
 }
 .review-card-btns .del-review {
   color: var(--main);
@@ -915,4 +917,22 @@ select:focus {
   background-color: var(--contrast);
   display: grid;
   place-items: center;
+}
+.review-card-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.review-card .create-review-form {
+  position: inherit;
+  padding: 0;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+.review-card .create-review-form .review-form-content {
+  display: flex;
+}
+.hide-review-form {
+  display: none;
 }

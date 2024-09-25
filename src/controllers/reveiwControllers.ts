@@ -18,7 +18,7 @@ export const setTourUserRequestId = (
 
 export const getReview = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const review = await Review.findById(req.params.id);
+    const review = await Review.findById(req.params.reviewId);
     res.status(200).json({
       status: 'success',
       Review,
@@ -39,7 +39,7 @@ export const getAllReviewsForUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const reviews = await Review.find({ user: req.user._id }).populate({
       path: 'tour',
-      select:'name imageCover'
+      select: 'name imageCover',
     });
     res.status(200).json({
       status: 'success',
@@ -59,6 +59,7 @@ export const createNewReview = catchAsync(
       return next(new ErrorHandler('You already reviewed this tour !.', 401));
     }
     req.body.rating = req.body.rating as number;
+
     const review = await Review.create(req.body);
 
     const tour = await Tour.findById(req.params.tourId);
@@ -69,21 +70,21 @@ export const createNewReview = catchAsync(
 
 export const updateReview = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const review = await Review.findByIdAndUpdate(req.params.id, req.body);
-
-    res.status(200).json({
-      status: 'success',
-      review,
-    });
+    const review = await Review.findByIdAndUpdate(
+      req.params.reviewId,
+      req.body,
+      {
+        new: true,
+        runValidators:true
+      }
+    );
+    res.redirect('/profile/reviews');
   }
 );
 
 export const deleteReview = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const review = await Review.findByIdAndDelete(req.params.id);
-
-    res.status(200).json({
-      status: 'success',
-    });
+    const review = await Review.findByIdAndDelete(req.params.reviewId);
+    res.redirect('/profile/reviews');
   }
 );

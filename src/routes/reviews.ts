@@ -8,8 +8,11 @@ import {
   setTourUserRequestId,
   getAllReviewsForUser,
 } from '../controllers/reveiwControllers';
-import { isLoggedIn, protect } from '../controllers/authControllers';
-import { renderProfile } from '../controllers/viewControllers';
+import {
+  isLoggedIn,
+  protect,
+  restrictTo,
+} from '../controllers/authControllers';
 const reviewRouter = Router({ mergeParams: true });
 
 reviewRouter.use(protect);
@@ -20,11 +23,9 @@ reviewRouter
   .post(isLoggedIn, setTourUserRequestId, createNewReview);
 reviewRouter.route('/my-reviews').get(getAllReviewsForUser);
 
+reviewRouter.route('/:reviewId').get(getReview).patch(updateReview);
 
-reviewRouter
-  .route('/:id')
-  .get(getReview)
-  .patch(updateReview)
-  .delete(deleteReview);
-
+reviewRouter.use(restrictTo('admin', 'user'));
+reviewRouter.post('/del-review/:reviewId', deleteReview);
+reviewRouter.post('/mod-review/:reviewId', updateReview);
 export default reviewRouter;

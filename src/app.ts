@@ -33,6 +33,8 @@ app.set('views', path.join(__dirname, 'views'));
 // setup the static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.urlencoded({ extended: true }));
+
 // all routers
 app.use('/', viewRouter);
 app.use('/users', userRouter);

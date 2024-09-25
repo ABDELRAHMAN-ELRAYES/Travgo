@@ -5,16 +5,27 @@ block profileSection
         h1 Your Reviews
         each review in reviews 
             .review-card 
-                img(src=`/img/tours/${review.tour.imageCover}`, alt="")
-                .review-card-data 
-                    h2 #{review.tour.name} 
-                    .review
-                        p.word Review:  
-                        p #{review.review} 
-                    .rating 
-                        p.word Rating:
-                        p #{review.rating} 
-                            span.word /5
-                .review-card-btns 
-                    a.btn.del-review(href="") Delete
-                    a.btn.update-review(href="") Modify
+                .review-card-content
+                    img(src=`/img/tours/${review.tour.imageCover}`, alt="")
+                    .review-card-data 
+                        h2 #{review.tour.name} 
+                        .review
+                            p.word Review:  
+                            p #{review.review} 
+                        .rating 
+                            p.word Rating:
+                            p #{review.rating} 
+                                span.word /5
+                    .review-card-btns
+                        form(action=`/reviews/del-review/${review._id}` method="POST") 
+                            button.btn.del-review(type="submit") Delete
+                        button.btn.update-review Modify
+                form.create-review-form.hide-review-form(action=`/reviews/mod-review/${review._id}` method="POST")
+                    .review-form-content
+                        .input-dev.review-input
+                                label(for="review") Review
+                                input.tour-review-input(type="text" name="review" placeholder="write your review")
+                        .input-dev.rating-input
+                                label(for="rating") Rating
+                                input.tour-review-rating-input(type="text" name="rating" placeholder="Rate Tour")
+                    button.btn.create-review-btn(type="submit") Modify

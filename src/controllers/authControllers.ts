@@ -134,7 +134,6 @@ const verifyToken = promisify(
 
 export const protect = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log('from protect middleware');
     // 1) check if there is a token
     if (!req.cookies.jwt) {
       return next(
