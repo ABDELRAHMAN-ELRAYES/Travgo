@@ -388,6 +388,20 @@ input {
 .submit-form .file-input {
   margin-bottom: 2rem;
 }
+.google-oauth-form {
+  display: flex;
+  width: fit-content;
+  height: 4rem;
+  align-items: center;
+  background: white;
+  padding: 0 3rem;
+  margin: 1rem 0;
+}
+.google-oauth-form img {
+  width: 2rem;
+  margin-right: 1rem;
+}
+
 .form-footer {
   width: 100%;
   display: flex;

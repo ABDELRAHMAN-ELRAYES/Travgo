@@ -11,6 +11,9 @@ block content
                 label(for="password") Password
                 input.pas(type="password" name="password" placeholder=".......")
             button.form-btn.login(type='submit') Login
+            a.google-oauth-form(href="/auth/google")
+                img(src="/img/icon/google-icon.png", alt="")
+                p Sing in with Google
             .form-footer
                 span Forgot Password?
                 a(href="/signup") Sign up

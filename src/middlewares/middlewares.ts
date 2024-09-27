@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import { iError } from '../interfaces/iError';
 import cookieParser from 'cookie-parser';
 import { createMulterMiddleware } from '../middlewares/uploadUserImage';
-
+import passport from './googleOAuth';
 
 export const morganMiddleware = morgan('dev');
 export const bodyParser = express.json();
@@ -30,3 +30,4 @@ export const globalErrorHandlerMiddleware = (
     location: error.stack,
   });
 };
+export const passportInitializeMiddleware = passport.initialize();

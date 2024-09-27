@@ -5,6 +5,7 @@ import {
   globalErrorHandlerMiddleware,
   cookiesParser,
   urlEndcoded,
+  passportInitializeMiddleware,
 } from './middlewares/middlewares';
 import tourRouter from './routes/toursRoute';
 import userRouter from './routes/userRoute';
@@ -14,6 +15,7 @@ import { ErrorHandler } from './utils/error';
 import path from 'path';
 import bookingRouter from './routes/bookingRoutes';
 import cors from 'cors';
+import googleRouter from './routes/googleOAuthRoutes';
 
 const app = express();
 
@@ -22,6 +24,7 @@ app.use(morganMiddleware);
 app.use(urlEndcoded);
 app.use(bodyParser);
 app.use(cookiesParser);
+app.use(passportInitializeMiddleware);
 
 const url = `http://localhost:3000`;
 app.use(cors({ origin: url }));
@@ -41,6 +44,7 @@ app.use('/users', userRouter);
 app.use('/tours', tourRouter);
 app.use('/reviews', reviewRouter);
 app.use('/bookings', bookingRouter);
+app.use('/auth/google', googleRouter);
 
 // the alternative if all routes not found
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
