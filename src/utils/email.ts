@@ -12,7 +12,7 @@ export const transporter = nodemailer.createTransport({
 });
 export const options = {
   from: process.env.COMPANY_GMAIL, // sender address
-  to: 'abdelrahmanelrayes10@gmail.com',
+  to: 'nodemailertest21cp@gmail.com',
   subject: 'Travgo urgent email ✔',
   text: 'Hello world?',
   html: '<b>Hello world?</b>',

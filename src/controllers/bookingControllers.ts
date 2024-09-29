@@ -6,6 +6,15 @@ import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET as string);
 
+/* 
+virtual credit card to check payment
+Card Number: 4242 4242 4242 4242
+Expiry Date: ( 12/34)
+CVC: ( 123)
+
+
+*/
+
 export const checkoutPaymentSession = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const tour = await Tour.findById(req.params.tourId);
@@ -29,9 +38,5 @@ export const checkoutPaymentSession = catchAsync(
       success_url: `${req.protocol}://${req.get('host')}/`,
       cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour?.slug}`,
     } as Stripe.Checkout.SessionCreateParams);
-    res.status(200).json({
-      status: 'success',
-      session,
-    });
   }
 );

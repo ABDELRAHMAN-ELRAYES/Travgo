@@ -4,13 +4,14 @@ import Review from './../models/reviewModel';
 import mongoose from 'mongoose';
 import Tour from '../models/tourModel';
 import { ErrorHandler } from '../utils/error';
+import { userDoc } from '../interfaces/userDoc';
 
 export const setTourUserRequestId = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.body.user) req.body.user = req.user._id;
+  if (!req.body.user) req.body.user = (req.user as userDoc)._id;
   if (!req.body.tour)
     req.body.tour = new mongoose.Types.ObjectId(req.params.tourId);
   next();
@@ -37,7 +38,9 @@ export const getAllReviews = catchAsync(
 );
 export const getAllReviewsForUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const reviews = await Review.find({ user: req.user._id }).populate({
+    const reviews = await Review.find({
+      user: (req.user as userDoc)._id,
+    }).populate({
       path: 'tour',
       select: 'name imageCover',
     });
@@ -75,7 +78,7 @@ export const updateReview = catchAsync(
       req.body,
       {
         new: true,
-        runValidators:true
+        runValidators: true,
       }
     );
     res.redirect('/profile/reviews');

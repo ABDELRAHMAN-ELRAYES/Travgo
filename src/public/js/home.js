@@ -93,3 +93,4 @@ if (modifyReviewBtns) {
     });
   });
 }
+// make the favourite tour colored

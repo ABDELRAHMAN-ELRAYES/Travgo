@@ -22,7 +22,8 @@ const userRouter = Router();
 userRouter.post('/login', login);
 userRouter.post('/signup', uploadUserPhotoMiddleware, signup);
 userRouter.post('/logout', isLoggedIn, logout);
-userRouter.post('/reset-password', protect, changePassword);
+userRouter.post('/change-password', protect, changePassword);
+userRouter.post('/forget-password', forgetPassword);
 
 userRouter.route('/').get(getAllUser).post(createNewUser);
 userRouter.route('/:id').get(getUser).put(updateUser).delete(deleteUser);

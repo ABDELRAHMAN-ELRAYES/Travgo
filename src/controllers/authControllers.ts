@@ -6,29 +6,10 @@ import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
 import Tour from '../models/tourModel';
 import { sendMail, transporter, options } from './../utils/email';
+import { googleProfile } from '../interfaces/googleProfile';
+import { userDoc } from '../interfaces/userDoc';
 
-/* 
 
-export const forgetPassword = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-      return next(
-        new ErrorHandler('User with entered email is not found!.', 401)
-      );
-    }
-
-    const token = user.createResetPasswordToken();
-
-    // await user.save({validateBeforeSave:false});
-    await sendMail(transporter, options);
-
-    res.status(200).json({
-      status: 'success',
-    });
-  }
-);
- */
 
 const createToken = async (res: Response, id: string) => {
   const token = await jwt.sign({ id }, <string>process.env.JWT_SECRET, {
@@ -76,7 +57,6 @@ export const login = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     // 1) check all required data is entered
     const { email, password } = req.body;
-    console.log(req.body);
     if (!email || !password) {
       return next(
         new ErrorHandler(
@@ -113,6 +93,32 @@ export const login = catchAsync(
     //   message: 'You are signed in successfully',
     //   token,
     // });
+
+    const tours = await Tour.find().limit(3);
+    res.status(200).render('home', {
+      title: 'Home',
+      tours,
+      user,
+    });
+  }
+);
+export const loginWithGoogle = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    // get the email from google response 
+    const email = (req.user as googleProfile)?.emails[0].value;
+
+    // get user using received google email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return next(
+        new ErrorHandler('Email or password is not correct, Try Again', 401)
+      );
+    }
+
+    //  create a session for this user (create a token)
+    const token = await createToken(res, user._id.toString());
+
 
     const tours = await Tour.find().limit(3);
     res.status(200).render('home', {
@@ -176,7 +182,7 @@ export const protect = catchAsync(
 );
 export const restrictTo = (...roles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    if (!roles.includes(req.user.role)) {
+    if (!roles.includes((req.user as userDoc).role)) {
       return next(
         new ErrorHandler(
           'You do not have permission to perform this action',
@@ -239,7 +245,7 @@ export const changePassword = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     // 1) check if the password is correct for the current user
 
-    const currentUser = await User.findById(req.user._id).select('+password');
+    const currentUser = await User.findById((req.user as userDoc)._id).select('+password');
     if (!currentUser) {
       return next(new ErrorHandler('User is not found!!.', 400));
     }
@@ -267,5 +273,23 @@ export const changePassword = catchAsync(
 );
 
 export const forgetPassword = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {}
+  async (req: Request, res: Response, next: NextFunction) => {
+    // const user = await User.findOne({ email: req.body.email });
+    // if (!user) {
+    //   return next(
+    //     new ErrorHandler('User with entered email is not found!.', 401)
+    //   );
+    // }
+
+    // const token = user.createResetPasswordToken();
+
+    // await user.save({validateBeforeSave:false});
+    await sendMail(transporter, options);
+
+    res.status(200).json({
+      status: 'success',
+    });
+  }
 );
+ 
+

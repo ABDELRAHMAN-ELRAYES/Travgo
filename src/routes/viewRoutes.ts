@@ -6,7 +6,7 @@ import {
   renderProfile,
   renderUserReviews,
   renderUserBookings,
-  renderUserBillings,
+  renderUserFavourites,
   renderShop,
   renderSignup,
   renderTourProfile,
@@ -26,7 +26,7 @@ viewRouter.route('/tour/:slug').get(isLoggedIn, renderTourProfile);
 viewRouter.route('/profile').get(protect, isLoggedIn, renderProfile);
 viewRouter.get('/profile/reviews', protect, isLoggedIn, renderUserReviews);
 viewRouter.get('/profile/bookings', protect, isLoggedIn, renderUserBookings);
-viewRouter.get('/profile/billings', protect, isLoggedIn, renderUserBillings);
+viewRouter.get('/profile/favourites', protect, isLoggedIn, renderUserFavourites);
 
 viewRouter
   .route('/submit-user-data')

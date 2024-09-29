@@ -13,9 +13,9 @@ block content
                                         li.left-nav-link(data-profile-section="reviews-sec")
                                                 i.fa-light.fa-star-sharp
                                                 a(href="/profile/reviews") MY REVIEWS
-                                        li.left-nav-link(data-profile-section="billings-sec")
-                                                i.fa-light.fa-wallet
-                                                a(href="/profile/billings") BILLINGS
+                                        li.left-nav-link(data-profile-section="favourites-sec")
+                                                i.fa-light.fa-heart
+                                                a(href="/profile/favourites") FAVOURITES
                         .profile-content
                                 block profileSection
                                         .profile-section.settings-sec
@@ -35,7 +35,7 @@ block content
                                                                         label(for="email") Email Address
                                                                         input(type="email" name="email" value=`${user.email}` placeholder=`${user.email}`)
                                                         button.btn.save-changes-btn(type='submit') Save Changes
-                                                form.pass-change-form(action="/users/reset-password" method="POST")
+                                                form.pass-change-form(action="/users/change-password" method="POST")
                                                         h1 PASSWORD CHANGE
                                                         .input-dev.pass-input
                                                                 label(for="password") Current Password

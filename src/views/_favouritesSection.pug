@@ -1,0 +1,17 @@
+extends profile 
+
+block profileSection 
+    .profile-section.favourites-sec
+        h1 Your Favourite Tours
+        .fav-tours
+            each favTour in tours 
+                .fav-tour-card 
+                    i.fa-solid.fa-heart.fav-icon
+                    img(src=`/img/tours/${favTour.tour.imageCover}`, alt=`${favTour.tour.name}`)
+                    h1 #{favTour.tour.name}
+                    p #{favTour.tour.summary}
+                    .rate-btn 
+                        p #{favTour.tour.ratingsAverage}
+                            span.highlighted-card-word=`/5 rating(${favTour.tour.ratingsQuantity})`
+                        a(href=`/tours/del-fav-tour/${favTour._id}`) Remove From Favourites
+                            

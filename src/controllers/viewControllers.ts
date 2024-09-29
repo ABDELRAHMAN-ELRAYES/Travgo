@@ -3,6 +3,8 @@ import { catchAsync } from '../utils/catchAsync';
 import Tour from '../models/tourModel';
 import User from '../models/userModel';
 import Review from '../models/reviewModel';
+import { userDoc } from '../interfaces/userDoc';
+import FavouriteTour from '../models/favouriteTourModel';
 // render the home page with the overview tours
 export const renderHome = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -81,7 +83,7 @@ export const updateUserData = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     req.body.photo = req.file?.filename;
     const updatedUser = await User.findByIdAndUpdate(
-      req.user._id,
+      (req.user as userDoc)._id,
       {
         name: req.body.name,
         email: req.body.email,
@@ -100,9 +102,13 @@ export const updateUserData = catchAsync(
     res.redirect('/profile');
   }
 );
+
+// render user reviews
 export const renderUserReviews = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const reviews = await Review.find({ user: req.user._id }).populate({
+    const reviews = await Review.find({
+      user: (req.user as userDoc)._id,
+    }).populate({
       path: 'tour',
       select: 'name imageCover',
     });
@@ -112,6 +118,8 @@ export const renderUserReviews = catchAsync(
     });
   }
 );
+
+// render user bookings
 export const renderUserBookings = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     res.status(200).render('_bookingsSection', {
@@ -119,10 +127,19 @@ export const renderUserBookings = catchAsync(
     });
   }
 );
-export const renderUserBillings = catchAsync(
+
+// render user favourite tourss
+export const renderUserFavourites = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).render('_billingsSection', {
-      title: 'Profile | Billings',
+    const allFavouriteTours = await FavouriteTour.find({
+      user: (req.user as userDoc)._id,
+    }).populate({
+      path: 'tour',
+      select: 'name imageCover summary ratingsAverage ratingsQuantity',
+    });
+    res.status(200).render('_favouritesSection', {
+      title: 'Profile | Favourites',
+      tours: allFavouriteTours,
     });
   }
 );
