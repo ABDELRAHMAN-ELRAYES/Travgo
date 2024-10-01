@@ -9,30 +9,12 @@ export const addTourToUserFavourites = catchAsync(
       tour: req.params.tourId,
       user: (req.user as userDoc)._id,
     });
-    const allFavouriteTours = await FavouriteTour.find({
-      user: (req.user as userDoc)._id,
-    }).populate({
-      path: 'tour',
-      select: 'name imageCover summary ratingsAverage ratingsQuantity',
-    });
-    res.status(200).render('_favouritesSection', {
-      title: 'Profile | Favourites',
-      tours: allFavouriteTours,
-    });
+    res.redirect('/profile/favourites');
   }
 );
 export const removeTourFromUserFavourites = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const tour = await FavouriteTour.findByIdAndDelete(req.params.tourId);
-    const allFavouriteTours = await FavouriteTour.find({
-      user: (req.user as userDoc)._id,
-    }).populate({
-      path: 'tour',
-      select: 'name imageCover summary ratingsAverage ratingsQuantity',
-    });
-    res.status(200).render('_favouritesSection', {
-      title: 'Profile | Favourites',
-      tours: allFavouriteTours,
-    });
+    res.redirect('/profile/favourites');
   }
 );

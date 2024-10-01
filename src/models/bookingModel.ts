@@ -16,13 +16,17 @@ const bookingSchema = new Schema({
     default: Date.now(),
   },
   price: Number,
-  padi: {
+  paid: {
     type: Boolean,
     default: true,
   },
 });
 bookingSchema.pre(/^find/, function (this: any, next) {
-  this.populate({ path: 'Tour', select: 'tour' });
+  this.populate({
+    path: 'tour',
+    select:
+      'name imageCover summary ratingsAverage ratingsQuantity slug price startDates',
+  });
   next();
 });
 

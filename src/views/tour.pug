@@ -60,12 +60,6 @@ block content
             .payment-title 
                 h2 WHAT ARE YOU WAITING FOR ?!
                 P Adventure, infinite Memories, Make it yours today!.
-                html(lang="en")
-                    head
-                        meta(charset="UTF-8")
-                        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-                        title Document
-                    body 
             if user 
                 button.btn.pay-btn#pay-for-tour(type="submit" data-tour-id=`${tour._id}`) Book Tour Now! 
             else 

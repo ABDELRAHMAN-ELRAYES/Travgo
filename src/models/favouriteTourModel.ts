@@ -12,6 +12,13 @@ const favouriteTourSchema = new Schema({
     require: [true, 'It must be a user to add tour to his favourites'],
   },
 });
+favouriteTourSchema.pre(/^find/, function (this: any, next) {
+  this.populate({
+    path: 'tour',
+    select: 'name imageCover summary ratingsAverage ratingsQuantity slug price',
+  });
+  next();
+});
 favouriteTourSchema.pre('save', async function (this: any, next) {
   const tour = this.tour;
   const isFound = await this.constructor.findOne({ tour });

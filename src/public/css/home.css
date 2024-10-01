@@ -474,14 +474,20 @@ input {
 }
 .profile .left-nav-link {
   display: flex;
-  padding: 1rem 2rem;
+  /* padding: 1rem 2rem; */
+  padding-left: 2rem;
+  margin-bottom: 0.5rem;
   cursor: pointer;
   position: relative;
 }
 .profile .left-nav-link a {
   color: var(--main);
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  width: 17rem;
 }
 
 .profile .left-nav-link::after,
@@ -900,7 +906,7 @@ select:focus {
   margin-bottom: 1rem;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
+  padding-right: 3rem;
 }
 .review-card .review-card-data {
   margin: 0 2rem;
@@ -919,6 +925,7 @@ select:focus {
 }
 .review-card img {
   height: 10rem;
+  width: 15rem;
   border-radius: 0.5rem;
 }
 .review-card-btns {
@@ -952,9 +959,11 @@ select:focus {
   padding: 0;
   margin-top: 1rem;
   justify-content: space-between;
+  border-radius: 0.5rem;
 }
 .review-card .create-review-form .review-form-content {
   display: flex;
+  margin-left: 3rem;
 }
 .hide-review-form {
   display: none;
@@ -1006,12 +1015,55 @@ select:focus {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 3rem 0;
+  margin: 2rem 0;
 }
-.fav-tour-card a {
+.fav-tour-card .detail-btn {
   color: var(--main);
+  margin-bottom: 2rem;
+}
+.fav-tour-card .del-fav-tour {
   margin-right: 2rem;
+  color: var(--main);
   border: 1px solid var(--main);
   border-radius: 0.5rem;
   padding: 0.5rem;
+}
+.bookings-sec .sec-title {
+  display: grid;
+  place-items: center;
+  margin-bottom: 2rem;
+  font-size: 3rem;
+}
+.bookings-sec .fav-tours {
+  display: grid;
+  grid-template-columns: repeat(2, 26rem);
+}
+.bookings-sec .fav-tour-card {
+  width: 25rem;
+  padding-top: 0.4rem;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.bookings-sec .fav-tour-card .paid-icon {
+  position: absolute;
+  top: -5rem;
+  right: -5rem;
+}
+.bookings-sec .fav-tour-card h1 {
+  padding: 0;
+  margin: 1rem 0;
+}
+.bookings-sec .fav-tour-card .tour-price {
+  padding-right: 2rem;
+}
+
+.bookings-sec .fav-tour-card .rate-btn {
+  margin: 1rem 0;
+}
+.bookings-sec .fav-tour-card .tour-date {
+  width: 100%;
+  padding-left: 4rem;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
 }

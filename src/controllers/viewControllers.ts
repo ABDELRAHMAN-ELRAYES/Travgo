@@ -5,6 +5,7 @@ import User from '../models/userModel';
 import Review from '../models/reviewModel';
 import { userDoc } from '../interfaces/userDoc';
 import FavouriteTour from '../models/favouriteTourModel';
+import Booking from '../models/bookingModel';
 // render the home page with the overview tours
 export const renderHome = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -15,19 +16,19 @@ export const renderHome = catchAsync(
     });
   }
 );
-export const renderHomeWithUser = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const user = req.user;
-    const tours = await Tour.find().limit(3);
-    console.log(tours);
+// export const renderHomeWithUser = catchAsync(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     const user = req.user;
+//     const tours = await Tour.find().limit(3);
+//     console.log(tours);
 
-    res.status(200).render('home', {
-      title: 'Home',
-      tours,
-      user,
-    });
-  }
-);
+//     res.status(200).render('home', {
+//       title: 'Home',
+//       tours,
+//       user,
+//     });
+//   }
+// );
 // render the shop page
 export const renderShop = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -122,8 +123,10 @@ export const renderUserReviews = catchAsync(
 // render user bookings
 export const renderUserBookings = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    const bookings = await Booking.find({ user: (req.user as userDoc)._id });
     res.status(200).render('_bookingsSection', {
       title: 'Profile | Bookings',
+      bookings,
     });
   }
 );
@@ -133,9 +136,6 @@ export const renderUserFavourites = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const allFavouriteTours = await FavouriteTour.find({
       user: (req.user as userDoc)._id,
-    }).populate({
-      path: 'tour',
-      select: 'name imageCover summary ratingsAverage ratingsQuantity',
     });
     res.status(200).render('_favouritesSection', {
       title: 'Profile | Favourites',

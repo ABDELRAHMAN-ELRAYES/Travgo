@@ -13,5 +13,5 @@ block profileSection
                     .rate-btn 
                         p #{favTour.tour.ratingsAverage}
                             span.highlighted-card-word=`/5 rating(${favTour.tour.ratingsQuantity})`
-                        a(href=`/tours/del-fav-tour/${favTour._id}`) Remove From Favourites
-                            
+                        a.del-fav-tour(href=`/tours/del-fav-tour/${favTour._id}`) Remove From Favourites
+                    a.detail-btn(href=`/tour/${favTour.tour.slug}`) More Details...

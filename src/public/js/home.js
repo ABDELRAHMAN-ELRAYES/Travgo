@@ -49,6 +49,7 @@ const stripe = Stripe(
 let payBtn = document.getElementById('pay-for-tour');
 if (payBtn) {
   payBtn.addEventListener('click', async (event) => {
+    payBtn.innerHTML ='Booking...'
     try {
       const tourId = event.target.dataset.tourId;
       const session = await fetch(
@@ -60,6 +61,7 @@ if (payBtn) {
           },
         }
       ).then((res) => res.json());
+      console.log(session);
       await stripe.redirectToCheckout({
         sessionId: session.session.id,
       });

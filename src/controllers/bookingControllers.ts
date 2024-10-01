@@ -3,6 +3,8 @@ import { catchAsync } from '../utils/catchAsync';
 import Tour from '../models/tourModel';
 
 import Stripe from 'stripe';
+import Booking from '../models/bookingModel';
+import { userDoc } from '../interfaces/userDoc';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET as string);
 
@@ -11,8 +13,6 @@ virtual credit card to check payment
 Card Number: 4242 4242 4242 4242
 Expiry Date: ( 12/34)
 CVC: ( 123)
-
-
 */
 
 export const checkoutPaymentSession = catchAsync(
@@ -35,8 +35,24 @@ export const checkoutPaymentSession = catchAsync(
           quantity: 1,
         },
       ],
-      success_url: `${req.protocol}://${req.get('host')}/`,
+      success_url: `${req.protocol}://${req.get('host')}/home?tour=${
+        tour?._id
+      }&paid=true`,
       cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour?.slug}`,
     } as Stripe.Checkout.SessionCreateParams);
+    res.status(200).json({
+      session,
+    });
+  }
+);
+export const createTourBooking = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { tour, paid } = req.query;
+    if (!tour && !paid) return next();
+    const booking = await Booking.create({
+      user: (req.user as userDoc)._id,
+      tour,
+    });
+    next();
   }
 );
