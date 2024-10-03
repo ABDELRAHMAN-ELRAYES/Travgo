@@ -49,7 +49,7 @@ const stripe = Stripe(
 let payBtn = document.getElementById('pay-for-tour');
 if (payBtn) {
   payBtn.addEventListener('click', async (event) => {
-    payBtn.innerHTML ='Booking...'
+    payBtn.innerHTML = 'Booking...';
     try {
       const tourId = event.target.dataset.tourId;
       const session = await fetch(
@@ -72,11 +72,27 @@ if (payBtn) {
 }
 
 let createReviewForm = document.querySelector('.create-review-form');
-
-createReviewForm.addEventListener('submit', (event) => {
-  createReviewForm.querySelector('.create-review-btn').innerHTML =
-    'reviewing...';
-});
+let viewTourReviewBtn = document.getElementById('view-review-form-btn');
+let reviewForm = document.getElementById('review-form');
+if (viewTourReviewBtn) {
+  viewTourReviewBtn.addEventListener('click', (event) => {
+    if (!event.target.classList.contains('viewed')) {
+      event.target.classList.add('viewed');
+      event.target.innerHTML = 'Cancel';
+      reviewForm.classList.remove('hide-review-form');
+    } else {
+      event.target.classList.remove('viewed');
+      event.target.innerHTML = 'Review';
+      reviewForm.classList.add('hide-review-form');
+    }
+  });
+}
+// if (createReviewForm) {
+//   createReviewForm.addEventListener('submit', (event) => {
+//     createReviewForm.querySelector('.create-review-btn').innerHTML =
+//       'reviewing...';
+//   });
+// }
 
 // view the form that the user will modify his review and rating through
 let modifyReviewBtns = document.querySelectorAll('.update-review');
@@ -95,4 +111,65 @@ if (modifyReviewBtns) {
     });
   });
 }
-// make the favourite tour colored
+
+// show alert if the user  add a tour to favourites the second time
+
+let allFavouriteBtns = document.querySelectorAll('.favourite-tour');
+if (allFavouriteBtns) {
+  allFavouriteBtns.forEach((btn) => {
+    btn.addEventListener('click', async (event) => {
+      const tour = event.target.closest('.favourite-tour').dataset.tourId;
+      try {
+        await axios.get(`http://localhost:3000/tours/fav-tour/${tour}`);
+        alert(
+          'Tour is added to your Favourites,Go Profile favourites section to see all your Favourites...'
+        );
+      } catch (error) {
+        console.log(error);
+        if (error.response) {
+          alert(error.response.data.message);
+        } else if (error.data) {
+          alert(error.data.message);
+        } else {
+          alert('ERROR OCCURED...!');
+        }
+      }
+    });
+  });
+}
+// show alert if the user try to review a tour for the second time
+
+
+let reviewBtn = document.querySelector('.create-review-btn');
+reviewBtn.addEventListener('click', async (event) => {
+  const tour = event.target.dataset.tourId;
+  const review = event.target
+    .closest('.create-review-form')
+    .querySelector('.tour-review-input');
+  const rating = event.target
+    .closest('.create-review-form')
+    .querySelector('.tour-review-rating-input');
+  event.target.innerHTML = 'reviewing...';
+  try {
+    await axios.post(`http://localhost:3000/tours/${tour}/reviews`, {
+      review: review.value,
+      rating: rating.value,
+    });
+    alert('You have reviewed Successfully...!');
+    window.location.reload();
+    review.value = '';
+    rating.value = '';
+    event.target.innerHTML = 'Review';
+
+  } catch (error) {
+    event.target.innerHTML = 'Review';
+    console.log(error);
+    if (error.response) {
+      alert(error.response.data.message);
+    } else if (error.data) {
+      alert(error.data.message);
+    } else {
+      alert('ERROR OCCURED...!');
+    }
+  }
+});

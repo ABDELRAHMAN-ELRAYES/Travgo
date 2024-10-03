@@ -40,6 +40,6 @@ tourRouter.get(
   isLoggedIn,
   removeTourFromUserFavourites
 );
-// tourRouter.route('/search-tours').post(searchForTours);
+tourRouter.route('/search-tours').post(isLoggedIn,searchForTours);
 
 export default tourRouter;

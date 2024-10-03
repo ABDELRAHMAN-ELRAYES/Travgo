@@ -230,7 +230,10 @@ nav .user-info p {
 .tours-sec h1 {
   font-size: 4rem;
   font-weight: 900;
-  margin-bottom: 3rem;
+  width: 100rem;
+  display: grid;
+  justify-content: center;
+  margin: 5rem 0;
 }
 .tours-content {
   width: 85%;
@@ -263,6 +266,7 @@ nav .user-info p {
   top: 2rem;
   font-size: 1.8rem;
   color: var(--font);
+  cursor: pointer;
 }
 .tour-card .tour-title {
   font-size: 2.9rem;
@@ -602,10 +606,13 @@ input {
 /* shop view */
 
 .tours-sec .search-container {
-  width: 65rem;
+  width: 97rem;
   height: 6rem;
   border: 2px solid var(--first-con);
-  border-radius: 4rem;
+  /* border-radius: 4rem; */
+
+  border-top-right-radius: 2rem;
+  border-top-left-radius: 2rem;
   margin-top: 5rem;
   display: flex;
   justify-content: space-between;
@@ -632,6 +639,7 @@ input {
 .search-container label {
   font-weight: 900;
   margin-bottom: 0.5rem;
+  margin-right: 1rem;
 }
 option {
   padding: 10px;
@@ -644,6 +652,10 @@ select:focus {
 .tours-sec .search-btn {
   background: var(--contrast);
   color: var(--main);
+  height: 2.5rem;
+}
+.forth-filter input {
+  width: fit-content;
 }
 /* tour profile */
 .tour {
@@ -758,34 +770,26 @@ select:focus {
 }
 #map {
   width: 100%;
-  height: 60rem;
+  height: 35rem;
   margin-top: 5rem;
   position: relative;
-  margin-bottom: 15rem;
 }
-.map-overlay {
-  width: 110%;
-  height: 20rem;
-  background: var(--main);
-  z-index: 500;
-  position: absolute;
-  bottom: -71rem;
-  left: -2rem;
-  transform: rotate(-7deg);
-  display: flex;
-  align-items: center;
-  padding-left: 22rem;
+.tour-reviews-container {
+  position: relative;
+  padding-bottom: 3rem;
 }
-.map-overlay h1 {
-  width: fit-content;
-  font-size: 5rem;
+.tour-reviews-title {
+  display: grid;
+  place-items: center;
+  margin: 5rem 0;
+  font-size: 3rem;
 }
 .leaflet-touch .leaflet-control-attribution {
   display: none;
 }
 .tour-reviews {
   width: 100%;
-  height: 15rem;
+  height: 16rem;
   background: var(--font);
   padding: 4rem 4rem;
   align-items: center;
@@ -793,8 +797,8 @@ select:focus {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   row-gap: 5rem;
-  margin-top: 16rem;
-  margin-bottom: 5rem;
+  /* margin-top: 16rem;
+  margin-bottom: 5rem; */
 }
 .tour-review {
   width: 15rem;
@@ -823,20 +827,20 @@ select:focus {
 }
 .create-review-form {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   background: var(--font);
   color: var(--main);
-  position: absolute;
-  top: 163rem;
-  right: 0rem;
-  width: 100%;
-  padding-top: 18rem;
-  padding-right: 3rem;
 }
-.create-review-form button {
+.create-review-form button,
+#view-review-form-btn {
   border: 1px solid var(--main);
   color: var(--main);
+}
+#view-review-form-btn {
+  position: absolute;
+  right: 3rem;
+  bottom: 2rem;
 }
 .create-review-form .review-input {
   margin-right: 1rem;
@@ -869,6 +873,7 @@ select:focus {
   padding-left: 8rem;
   position: relative;
   transform: translateX(30rem);
+  margin-top: 5rem;
 }
 .tour-payment img {
   width: 10rem;
@@ -1020,6 +1025,7 @@ select:focus {
 .fav-tour-card .detail-btn {
   color: var(--main);
   margin-bottom: 2rem;
+  z-index: 300;
 }
 .fav-tour-card .del-fav-tour {
   margin-right: 2rem;
@@ -1049,6 +1055,7 @@ select:focus {
   position: absolute;
   top: -5rem;
   right: -5rem;
+  z-index: 254;
 }
 .bookings-sec .fav-tour-card h1 {
   padding: 0;
@@ -1066,4 +1073,20 @@ select:focus {
   padding-left: 4rem;
   font-size: 0.8rem;
   margin-bottom: 1rem;
+}
+.error-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3.5rem;
+}
+.error-container img {
+  width: 50rem;
+}
+.error-container h2 {
+  font-size: 6rem;
+  margin-top: 4rem;
+  font-family: var(--logo-font);
+  color: #3f3d56;
 }

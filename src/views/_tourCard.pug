@@ -1,6 +1,8 @@
 mixin tourCard(name,summary,ratingsAverage,ratingsQuantity,price,location,groupSize,img,startDate,stops,slug,tourId)
     .tour-card
-        a.favourite-tour(href=`/tours/fav-tour/${tourId}`)
+        //- a.favourite-tour(href=`/tours/fav-tour/${tourId}`)
+        //-     i.fa-light.fa-heart
+        .favourite-tour(data-tour-id=`${tourId}`)
             i.fa-light.fa-heart
         img(src=`/img/tours/${img}`, alt="")
         h2.tour-title=name 

@@ -58,6 +58,7 @@ export const createNewReview = catchAsync(
       tour: req.body.tour,
       user: req.body.user,
     });
+    console.log(req.body);
     if (previousReview.length > 0) {
       return next(new ErrorHandler('You already reviewed this tour !.', 401));
     }

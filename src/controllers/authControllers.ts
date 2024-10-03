@@ -105,6 +105,7 @@ export const login = catchAsync(
 export const loginWithGoogle = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     // get the email from google response 
+    console.log(req.user);
     const email = (req.user as googleProfile)?.emails[0].value;
 
     // get user using received google email
@@ -128,6 +129,7 @@ export const loginWithGoogle = catchAsync(
     });
   }
 );
+
 const verifyToken = promisify(
   (
     token: string,

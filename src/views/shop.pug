@@ -3,27 +3,32 @@ block content
     section.tours-sec
                 form.search-container(action="/tours/search-tours" method="POST")
                     .first-filter
-                        - const availablePriceRange = [1000,2000,3000,4000,5000];
-                        <label for="price">Proper Price</label>
-                        <select id="price" name="price">
+                        - const availablePriceRange = ['All',1000,2000,3000,4000,5000];
+                        label(for="price") Proper Price
+                        select(id="price" name="price")
                             each price in availablePriceRange
-                                <option>#{price}</option>
-                        </select>
+                                option #{price}
                     .second-filter 
-                        - const rates = [3.5,3.9,4,4.3,4.6,5];
-                        <label for="rate">Proper rate</label>
-                        <select id="rate" name="rate">
+                        - const rates = ['All',3.5,3.8,4,4.3,4.6,5];
+                        label(for="rate") Rate
+                        select(id="rate" name="rate")
                             each rate in rates
-                                <option>#{rate}</option>
-                        </select>
+                                option #{rate}
                     .third-filter 
-                        <label for="checkIn">Check in</label>
-                        input(type="date" name="checkIn")
-                    .fourth-filter
-                        <label for="checkOut">Check out</label>
-                        input(type="date" name="checkOut")
+                        label(for="startDate") Start Date
+                        input(type="date" name="startDate")
+                    .fifth-filter
+                        label(for="difficulty") Difficulty
+                        select(name="difficulty" id="difficulty") 
+                                option(value="All") All 
+                                option(value="easy") easy
+                                option(value="medium") medium 
+                                option(value="difficult") difficult
                     button.btn.search-btn(type="submit") Search
-                h1.tours-title(style="margin-top:5rem") All Tours 
+                    .forth-filter 
+                        label(for="sort") Rating Sort
+                        input(type="checkbox" name='sort' value='-ratingsAverage') 
+                h1.tours-title All Tours 
                 .tours-content
                     each tour in tours
                         - let date = new Date(tour.startDates[0]).toLocaleDateString('en-US', {  year: 'numeric',  month: 'long', day: 'numeric',});

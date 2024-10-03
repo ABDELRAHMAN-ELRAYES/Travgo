@@ -14,6 +14,7 @@ html
         title Travgo | #{title}
         script(src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer)
         script(src="https://js.stripe.com/v3/" defer)
+        script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer)
         script(src="/js/home.js" defer)
     body 
         nav
@@ -38,6 +39,9 @@ html
                         a.signup-btn(href="/signup") Sign up   
                     .signin
                         a.signin-btn(href="/login") Sign in   
+        if message
+            .error-content
+                p #{message}
         block content
             section.home-sec
                 .home-content 

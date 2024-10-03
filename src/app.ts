@@ -16,6 +16,8 @@ import path from 'path';
 import bookingRouter from './routes/bookingRoutes';
 import cors from 'cors';
 import googleRouter from './routes/googleOAuthRoutes';
+import { renderErrorPage } from './controllers/viewControllers';
+import { isLoggedIn } from './controllers/authControllers';
 
 const app = express();
 
@@ -47,13 +49,15 @@ app.use('/bookings', bookingRouter);
 app.use('/auth/google', googleRouter);
 
 // the alternative if all routes not found
-app.all('*', (req: Request, res: Response, next: NextFunction) => {
+/* app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const error = new ErrorHandler(
     `This URL provided ${req.originalUrl} is not  found`,
     404
   );
   next(error);
-});
+}); */
+
+app.all('*',isLoggedIn,renderErrorPage);
 
 // catch errors globally
 app.use(globalErrorHandlerMiddleware);

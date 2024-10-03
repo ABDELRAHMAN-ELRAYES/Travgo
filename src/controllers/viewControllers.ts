@@ -6,6 +6,7 @@ import Review from '../models/reviewModel';
 import { userDoc } from '../interfaces/userDoc';
 import FavouriteTour from '../models/favouriteTourModel';
 import Booking from '../models/bookingModel';
+import { title } from 'process';
 // render the home page with the overview tours
 export const renderHome = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -16,19 +17,6 @@ export const renderHome = catchAsync(
     });
   }
 );
-// export const renderHomeWithUser = catchAsync(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const user = req.user;
-//     const tours = await Tour.find().limit(3);
-//     console.log(tours);
-
-//     res.status(200).render('home', {
-//       title: 'Home',
-//       tours,
-//       user,
-//     });
-//   }
-// );
 // render the shop page
 export const renderShop = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -73,7 +61,7 @@ export const renderTourProfile = catchAsync(
       .populate('guides', '-_id name photo role')
       .populate('reviews', 'review rating user');
     res.status(200).render('tour', {
-      title: 'Profile',
+      title: `${tour?.name} Tour`,
       tour,
     });
   }
@@ -95,11 +83,6 @@ export const updateUserData = catchAsync(
         runValidators: true,
       }
     );
-    // //! there is an error that when rendering the profile the photo doesn't appear but after reloading the page the photo appear
-    // res.status(200).render('profile', {
-    //   title: 'Profile',
-    //   user: req.user,
-    // });
     res.redirect('/profile');
   }
 );
@@ -111,7 +94,7 @@ export const renderUserReviews = catchAsync(
       user: (req.user as userDoc)._id,
     }).populate({
       path: 'tour',
-      select: 'name imageCover',
+      select: 'name imageCover slug',
     });
     res.status(200).render('_reviewsSection', {
       title: 'Profile | Reviews',
@@ -141,5 +124,13 @@ export const renderUserFavourites = catchAsync(
       title: 'Profile | Favourites',
       tours: allFavouriteTours,
     });
+  }
+);
+export const renderErrorPage = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    
+    res.render('error',{
+      title:'Error'
+    })
   }
 );

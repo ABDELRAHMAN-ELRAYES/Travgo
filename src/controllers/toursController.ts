@@ -4,6 +4,7 @@ import { validateTourId } from '../utils/validateId';
 import { APIFeatures } from '../utils/apiFeature';
 import { catchAsync } from '../utils/catchAsync';
 import { ErrorHandler } from '../utils/error';
+import { title } from 'process';
 
 export const getTour = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -35,7 +36,7 @@ export const getAllTours = catchAsync(
       const apiFeatures = new APIFeatures(query, req.query).filter().sort();
     }
     const tours = await query;
-   
+
     if (!tours) {
       return next(new ErrorHandler('tour not found', 404));
     }
@@ -99,8 +100,19 @@ export const deleteTour = catchAsync(
 
 export const searchForTours = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.json({
-      status: 'success',
+    const { price, rate, sort, startDate, difficulty } = req.body;
+    let query: any = {};
+    if (price && price != 'All') query.price = { $lte: price };
+    if (rate && rate != 'All') query.ratingsAverage = { $lte: rate };
+    if (difficulty && difficulty != 'All') query.difficulty = difficulty;
+    if (startDate)
+      query.startDates = { $elemMatch: { $gte: new Date(startDate) } };
+    const documents = Tour.find(query);
+    if (sort) documents.sort(sort);
+    const tours = await documents;
+    res.render('shop', {
+      title: 'Shop',
+      tours,
     });
   }
 );

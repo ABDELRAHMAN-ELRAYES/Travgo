@@ -20,7 +20,7 @@ viewRouter.route('/').get(isLoggedIn, renderHome);
 viewRouter
   .route('/home')
   .get(protect, isLoggedIn, createTourBooking, renderHome);
-viewRouter.route('/shop').get(protect, isLoggedIn, renderShop);
+viewRouter.route('/shop').get( isLoggedIn, renderShop);
 viewRouter.route('/login').get(renderLogin);
 viewRouter.route('/signup').get(renderSignup);
 viewRouter.route('/tour/:slug').get(isLoggedIn, renderTourProfile);

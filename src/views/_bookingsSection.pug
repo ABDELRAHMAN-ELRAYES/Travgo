@@ -8,7 +8,8 @@ block profileSection
                 .fav-tour-card 
                     img.paid-icon(src="/img/paid-icon.png", alt="")
                     img(src=`/img/tours/${booking.tour.imageCover}`, alt=`${booking.tour.name}`)
-                    h1 #{booking.tour.name}
+                    a.detail-btn(href=`/tour/${booking.tour.slug}`)
+                        h1 #{booking.tour.name}
                     p #{booking.tour.summary}
                     .rate-btn 
                         p #{booking.tour.ratingsAverage}
@@ -16,4 +17,3 @@ block profileSection
                         p.tour-price $#{booking.tour.price}
                     - let date = new Date(booking.tour.startDates[0]).toLocaleDateString('en-US', {  year: 'numeric',  month: 'long', day: 'numeric',hour:'numeric',minute:'numeric'});
                     p.tour-date Starts At:- #{date}
-                    a.detail-btn(href=`/tour/${booking.tour.slug}`) More Details...
