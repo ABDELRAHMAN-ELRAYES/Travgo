@@ -2,14 +2,15 @@ extends home
 
 block content
     .login-form-container
-        form.submit-form(action="/users/login" method="POST")
+        //- form.submit-form(action="/users/login" method="POST")
+        .submit-form
             h1.form-title Login
             .input-dev.email-input
                 label(for="email") Email Address
-                input(type="email" name="email" placeholder="Enter Your Email")
+                input.email(type="email" name="email" placeholder="Enter Your Email")
             .input-dev.pass-input
                 label(for="password") Password
-                input.pas(type="password" name="password" placeholder=".......")
+                input.pass(type="password" name="password" placeholder=".......")
             button.form-btn.login(type='submit') Login
             a.google-oauth-form(href="/auth/google")
                 img(src="/img/icon/google-icon.png", alt="")

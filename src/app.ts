@@ -57,7 +57,7 @@ app.use('/auth/google', googleRouter);
   next(error);
 }); */
 
-app.all('*',isLoggedIn,renderErrorPage);
+app.all('*', isLoggedIn, renderErrorPage);
 
 // catch errors globally
 app.use(globalErrorHandlerMiddleware);

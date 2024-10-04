@@ -87,12 +87,7 @@ if (viewTourReviewBtn) {
     }
   });
 }
-// if (createReviewForm) {
-//   createReviewForm.addEventListener('submit', (event) => {
-//     createReviewForm.querySelector('.create-review-btn').innerHTML =
-//       'reviewing...';
-//   });
-// }
+
 
 // view the form that the user will modify his review and rating through
 let modifyReviewBtns = document.querySelectorAll('.update-review');
@@ -125,7 +120,6 @@ if (allFavouriteBtns) {
           'Tour is added to your Favourites,Go Profile favourites section to see all your Favourites...'
         );
       } catch (error) {
-        console.log(error);
         if (error.response) {
           alert(error.response.data.message);
         } else if (error.data) {
@@ -139,37 +133,65 @@ if (allFavouriteBtns) {
 }
 // show alert if the user try to review a tour for the second time
 
-
 let reviewBtn = document.querySelector('.create-review-btn');
-reviewBtn.addEventListener('click', async (event) => {
-  const tour = event.target.dataset.tourId;
-  const review = event.target
-    .closest('.create-review-form')
-    .querySelector('.tour-review-input');
-  const rating = event.target
-    .closest('.create-review-form')
-    .querySelector('.tour-review-rating-input');
-  event.target.innerHTML = 'reviewing...';
-  try {
-    await axios.post(`http://localhost:3000/tours/${tour}/reviews`, {
-      review: review.value,
-      rating: rating.value,
-    });
-    alert('You have reviewed Successfully...!');
-    window.location.reload();
-    review.value = '';
-    rating.value = '';
-    event.target.innerHTML = 'Review';
-
-  } catch (error) {
-    event.target.innerHTML = 'Review';
-    console.log(error);
-    if (error.response) {
-      alert(error.response.data.message);
-    } else if (error.data) {
-      alert(error.data.message);
-    } else {
-      alert('ERROR OCCURED...!');
+if (reviewBtn) {
+  reviewBtn.addEventListener('click', async (event) => {
+    const tour = event.target.dataset.tourId;
+    const review = event.target
+      .closest('.create-review-form')
+      .querySelector('.tour-review-input');
+    const rating = event.target
+      .closest('.create-review-form')
+      .querySelector('.tour-review-rating-input');
+    event.target.innerHTML = 'reviewing...';
+    try {
+      await axios.post(`http://localhost:3000/tours/${tour}/reviews`, {
+        review: review.value,
+        rating: rating.value,
+      });
+      alert('You have reviewed Successfully...!');
+      window.location.reload();
+      review.value = '';
+      rating.value = '';
+      event.target.innerHTML = 'Review';
+    } catch (error) {
+      event.target.innerHTML = 'Review';
+      if (error.response) {
+        alert(error.response.data.message);
+      } else if (error.data) {
+        alert(error.data.message);
+      } else {
+        alert('ERROR OCCURED...!');
+      }
     }
-  }
-});
+  });
+}
+// show alert with error while login
+
+let loginBtn = document.querySelector('.login');
+if (loginBtn) {
+  loginBtn.addEventListener('click', async (event) => {
+    const email = event.target.closest('.submit-form').querySelector('.email');
+    const password = event.target
+      .closest('.submit-form')
+      .querySelector('.pass');
+
+    event.target.innerHTML = 'login...';
+    try {
+      await axios.post(`http://localhost:3000/users/login`, {
+        email: email.value,
+        password: password.value,
+      });
+      window.location.href = '/';
+    } catch (error) {
+      event.target.innerHTML = 'Login';
+      if (error.response) {
+        alert(error.response.data.message);
+      } else if (error.data) {
+        alert(error.data.message);
+      } else {
+        alert('ERROR OCCURED...!');
+      }
+    }
+  });
+}

@@ -31,7 +31,8 @@ html
             if user 
                  a(href="/profile")   
                     .user-info
-                        img(src=`/img/users/${user.photo}`, alt="")
+                        - let picPath = (user.photo.startsWith('http')) ? user.photo : `/img/users/${user.photo}`;
+                        img(src=`${picPath}`,  alt=`${user.name}`)
                         p #{user.name.split(' ')[0]}
             else
                 .nav-btns
@@ -39,9 +40,6 @@ html
                         a.signup-btn(href="/signup") Sign up   
                     .signin
                         a.signin-btn(href="/login") Sign in   
-        if message
-            .error-content
-                p #{message}
         block content
             section.home-sec
                 .home-content 

@@ -22,7 +22,7 @@ const userRouter = Router();
 userRouter.post('/login', login);
 userRouter.post('/signup', uploadUserPhotoMiddleware, signup);
 userRouter.post('/logout', isLoggedIn, logout);
-userRouter.post('/change-password', protect, changePassword);
+userRouter.post('/change-password', protect,isLoggedIn, changePassword);
 userRouter.post('/forget-password', forgetPassword);
 
 userRouter.route('/').get(getAllUser).post(createNewUser);

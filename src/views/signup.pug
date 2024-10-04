@@ -2,26 +2,29 @@ extends home
 
 block content
     .signup-form-container
-        form.submit-form(action="/users/signup" method="POST" enctype="multipart/form-data")
+        form.submit-form.signup-form(action="/users/signup" method="POST" enctype="multipart/form-data")
             h1.form-title Signup
             .first-input-content
                 .input-dev.name-input
                     label(for="name") Full name
-                    input(type="name" name="name" placeholder="Enter your name")
+                    input.name(type="name" name="name" placeholder="Enter your name")
                 .input-dev.email-input
                     label(for="email") Email Address
-                    input(type="email" name="email" placeholder="Enter your Email")
+                    input.email(type="email" name="email" placeholder="Enter your Email")
             .second-input-content
                 .input-dev.pass-input
                     label(for="password") Password
-                    input.pas(type="password" name="password" placeholder="Enter your password")
+                    input.pass(type="password" name="password" placeholder="Enter your password")
                 .input-dev.passConfirm-input
                     label(for="passwordConfirm") confirm password
-                    input.pas(type="password" name="passwordConfirm" placeholder="Confirm your password")
+                    input.confirm-pass(type="password" name="passwordConfirm" placeholder="Confirm your password")
             .input-dev.file-input
                     label(for="file") Profile Photo
                     input(type="file" name="photo" )
-            button.form-btn(type='submit') Signup
+            button.form-btn#signup-btn(type='submit') Signup
+            a.google-oauth-form(href="/auth/google")
+                img(src="/img/icon/google-icon.png", alt="")
+                p Sing up with Google
             .form-footer
                 span Already have an account..?!
                 a(href="/login") Login

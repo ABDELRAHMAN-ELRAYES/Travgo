@@ -23,7 +23,8 @@ block content
                                                         .info-content-container
                                                                 h1 ACCOUNT INFORMATION
                                                                 .input-dev.file-input
-                                                                        img(src=`/img/users/${user.photo}`, alt=`Photo of ${user.name}`)
+                                                                        - let picPath = (user.photo.startsWith('http')) ? user.photo : `/img/users/${user.photo}`;
+                                                                        img(src=`${picPath}`, alt=`${user.name}`)
                                                                         .h-dev
                                                                                 label(for="file") To change your Photo
                                                                                 input(type="file" name="photo" )
@@ -47,6 +48,8 @@ block content
                                                                 .input-dev.new-passConfirm-input
                                                                         label(for="confirmNewPassword") Confirm New Password
                                                                         input.pas(type="password" name="confirmNewPassword" placeholder="Confirm new password" required)
+                                                        if message 
+                                                                p.message #{message}
                                                         button.btn.save-changes-btn(type='submit') Save Password
                 form.logout-form(action="/users/logout" method="POST") 
                         button.btn.logout-btn Logout

@@ -369,7 +369,7 @@ footer .logo {
   box-shadow: 0 4px 30px var(--font);
   backdrop-filter: blur(5.5px);
   -webkit-backdrop-filter: blur(5.5px);
-  margin-bottom: 3rem;
+  margin: 3rem 0;
 }
 input {
   padding: 0 1rem;
@@ -407,12 +407,19 @@ input {
   background: white;
   padding: 0 3rem;
   margin: 1rem 0;
+  border: 2px solid var(--font);
 }
 .google-oauth-form img {
   width: 2rem;
   margin-right: 1rem;
 }
-
+.signup-form .google-oauth-form {
+  width: 28rem;
+  justify-content: center;
+}
+.signup-form{
+  margin: 0;
+}
 .form-footer {
   width: 100%;
   display: flex;
@@ -1089,4 +1096,8 @@ select:focus {
   margin-top: 4rem;
   font-family: var(--logo-font);
   color: #3f3d56;
+}
+.message {
+  color: red;
+  margin-bottom: 1rem;
 }

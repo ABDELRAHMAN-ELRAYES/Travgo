@@ -9,8 +9,6 @@ import { sendMail, transporter, options } from './../utils/email';
 import { googleProfile } from '../interfaces/googleProfile';
 import { userDoc } from '../interfaces/userDoc';
 
-
-
 const createToken = async (res: Response, id: string) => {
   const token = await jwt.sign({ id }, <string>process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
@@ -104,10 +102,10 @@ export const login = catchAsync(
 );
 export const loginWithGoogle = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    // get the email from google response 
-    console.log(req.user);
+    // get the email from google response
     const email = (req.user as googleProfile)?.emails[0].value;
-
+    
+    
     // get user using received google email
     const user = await User.findOne({ email });
 
@@ -120,7 +118,6 @@ export const loginWithGoogle = catchAsync(
     //  create a session for this user (create a token)
     const token = await createToken(res, user._id.toString());
 
-
     const tours = await Tour.find().limit(3);
     res.status(200).render('home', {
       title: 'Home',
@@ -129,6 +126,35 @@ export const loginWithGoogle = catchAsync(
     });
   }
 );
+
+// export const signupWithGoogle = catchAsync(
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     const googleUser = req.user as googleProfile;
+//     const email = googleUser.emails[0].value;
+//     const photo = googleUser.photos[0].value;
+//     const name = googleUser.displayName;
+
+//     const user = await User.find({ email });
+
+//     if (user.length) {
+//       return next(new ErrorHandler('This email is already registered', 401));
+//     }
+
+//     const newUser = await User.create({
+//       name,
+//       email,
+//       photo,
+//       password: process.env.DEFAULT_USER_PASSWORD as string,
+//       passwordConfirm: process.env.DEFAULT_USER_PASSWORD as string,
+//     });
+
+//     // 4) create a session for this user (create a token)
+
+//     const token = await createToken(res, newUser._id.toString());
+//     // 5) redirect the user to home page after signup
+//     res.redirect('/');
+//   }
+// );
 
 const verifyToken = promisify(
   (
@@ -247,7 +273,9 @@ export const changePassword = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     // 1) check if the password is correct for the current user
 
-    const currentUser = await User.findById((req.user as userDoc)._id).select('+password');
+    const currentUser = await User.findById((req.user as userDoc)._id).select(
+      '+password'
+    );
     if (!currentUser) {
       return next(new ErrorHandler('User is not found!!.', 400));
     }
@@ -258,7 +286,11 @@ export const changePassword = catchAsync(
     );
 
     if (!isVerifiedPassword) {
-      return next(new ErrorHandler('Your Password is not correct!.', 400));
+      // return next(new ErrorHandler('Your Password is not correct!.', 400));
+      return res.render('profile', {
+        title: 'Profile',
+        message: 'Password is not correct..!',
+      });
     }
     // 2) update the user password using the new password
 
@@ -293,5 +325,3 @@ export const forgetPassword = catchAsync(
     });
   }
 );
- 
-

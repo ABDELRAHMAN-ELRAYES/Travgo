@@ -48,7 +48,6 @@ export const renderLogin = catchAsync(
 // render profile page
 export const renderProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const tours = await Tour.find();
     res.status(200).render('profile', {
       title: 'Profile',
     });
