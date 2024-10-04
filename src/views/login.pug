@@ -3,7 +3,7 @@ extends home
 block content
     .login-form-container
         //- form.submit-form(action="/users/login" method="POST")
-        .submit-form
+        form.submit-form(action="/users/login" method="POST")
             h1.form-title Login
             .input-dev.email-input
                 label(for="email") Email Address
@@ -11,10 +11,12 @@ block content
             .input-dev.pass-input
                 label(for="password") Password
                 input.pass(type="password" name="password" placeholder=".......")
+            if(message)
+                .message #{message}
             button.form-btn.login(type='submit') Login
             a.google-oauth-form(href="/auth/google")
                 img(src="/img/icon/google-icon.png", alt="")
                 p Sing in with Google
             .form-footer
-                span Forgot Password?
+                a(href="/forget-password") Forgot Password?
                 a(href="/signup") Sign up

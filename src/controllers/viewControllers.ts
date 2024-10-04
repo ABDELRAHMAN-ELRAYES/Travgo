@@ -133,3 +133,22 @@ export const renderErrorPage = catchAsync(
     })
   }
 );
+// render the foreget password form 
+export const renderForgetPassword = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.render('forgetPassword',{
+      title:'Send Reset Mail'
+    })
+  }
+);
+// render the reset password form 
+export const renderResetPasswordForm = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const token = (req.params.token as string).slice(1);
+    console.log(token);
+    res.render('resetPassword',{
+      title:'Send Password',
+      token
+    })
+  }
+);

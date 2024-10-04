@@ -42,7 +42,6 @@ if (mapty) {
 }
 
 // get the checkout payment session and then redirect to payment page
-//! (not completed yet)
 const stripe = Stripe(
   'pk_test_51Q2DG0P0QZUsyR2oTk6mrYqUn8jgaiWVJgmqjV0O6AaH7YcCVbL79bozz192ne0aWvxfpaDHGPjOn2SxvewVlp4J004yvDmifT'
 );
@@ -168,30 +167,31 @@ if (reviewBtn) {
 }
 // show alert with error while login
 
-let loginBtn = document.querySelector('.login');
-if (loginBtn) {
-  loginBtn.addEventListener('click', async (event) => {
-    const email = event.target.closest('.submit-form').querySelector('.email');
-    const password = event.target
-      .closest('.submit-form')
-      .querySelector('.pass');
+// let loginBtn = document.querySelector('.login');
+// if (loginBtn) {
+//   loginBtn.addEventListener('click', async (event) => {
+//     const email = event.target.closest('.submit-form').querySelector('.email');
+//     const password = event.target
+//       .closest('.submit-form')
+//       .querySelector('.pass');
 
-    event.target.innerHTML = 'login...';
-    try {
-      await axios.post(`http://localhost:3000/users/login`, {
-        email: email.value,
-        password: password.value,
-      });
-      window.location.href = '/';
-    } catch (error) {
-      event.target.innerHTML = 'Login';
-      if (error.response) {
-        alert(error.response.data.message);
-      } else if (error.data) {
-        alert(error.data.message);
-      } else {
-        alert('ERROR OCCURED...!');
-      }
-    }
-  });
-}
+//     event.target.innerHTML = 'login...';
+//     try {
+//       await axios.post(`http://localhost:3000/users/login`, {
+//         email: email.value,
+//         password: password.value,
+//       });
+//       window.location.href = '/';
+//     } catch (error) {
+//       event.target.innerHTML = 'Login';
+//       if (error.response) {
+//         alert(error.response.data.message);
+//       } else if (error.data) {
+//         alert(error.data.message);
+//       } else {
+//         console.log(error);
+//         alert('ERROR OCCURED...!');
+//       }
+//     }
+//   });
+// }

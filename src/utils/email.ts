@@ -12,16 +12,14 @@ export const transporter = nodemailer.createTransport({
 });
 export const options = {
   from: process.env.COMPANY_GMAIL, // sender address
-  to: 'nodemailertest21cp@gmail.com',
-  subject: 'Travgo urgent email ✔',
-  text: 'Hello world?',
+  to: 'default',
+  subject: 'Travgo | Reset password ✔',
+  text: 'hello world?',
   html: '<b>Hello world?</b>',
 };
 export const sendMail = async (
   transporter: Transporter,
   options: SendMailOptions
 ) => {
-  console.log('Sending email...');
   await transporter.sendMail(options);
-  console.log('Email sent correctly');
 };

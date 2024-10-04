@@ -8,6 +8,7 @@ import Tour from '../models/tourModel';
 import { sendMail, transporter, options } from './../utils/email';
 import { googleProfile } from '../interfaces/googleProfile';
 import { userDoc } from '../interfaces/userDoc';
+import { title } from 'process';
 
 const createToken = async (res: Response, id: string) => {
   const token = await jwt.sign({ id }, <string>process.env.JWT_SECRET, {
@@ -56,21 +57,29 @@ export const login = catchAsync(
     // 1) check all required data is entered
     const { email, password } = req.body;
     if (!email || !password) {
-      return next(
-        new ErrorHandler(
-          'There is no entered data ,please fill all fields',
-          404
-        )
-      );
+      // return next(
+      //   new ErrorHandler(
+      //     'There is no entered data ,please fill all fields',
+      //     404
+      //   )
+      // );
+      return res.render('login', {
+        title: 'Login',
+        message: 'There is no entered data ,please fill all fields',
+      });
     }
 
     // 2) check if email is found or not
     const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
-      return next(
-        new ErrorHandler('Email or password is not correct, Try Again', 401)
-      );
+      // return next(
+      //   new ErrorHandler('Email or password is not correct, Try Again', 401)
+      // );
+      return res.render('login', {
+        title: 'Login',
+        message: 'Email or password is not correct, Try Again',
+      });
     }
     // 3) check if the password is correct for thsi user
     const isVerifiedPassword = await user.verifyPassword(
@@ -78,19 +87,17 @@ export const login = catchAsync(
       user.password
     );
     if (!isVerifiedPassword) {
-      return next(
-        new ErrorHandler('Email or password is not correct, Try Again', 401)
-      );
+      // return next(
+      //   new ErrorHandler('Email or password is not correct, Try Again', 401)
+      // );
+      return res.render('login', {
+        title: 'Login',
+        message: 'Email or password is not correct, Try Again',
+      });
     }
 
     // 4) create a session for this user (create a token)
     const token = await createToken(res, user._id.toString());
-
-    // res.status(200).json({
-    //   status: 'success',
-    //   message: 'You are signed in successfully',
-    //   token,
-    // });
 
     const tours = await Tour.find().limit(3);
     res.status(200).render('home', {
@@ -104,8 +111,7 @@ export const loginWithGoogle = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     // get the email from google response
     const email = (req.user as googleProfile)?.emails[0].value;
-    
-    
+
     // get user using received google email
     const user = await User.findOne({ email });
 
@@ -126,35 +132,6 @@ export const loginWithGoogle = catchAsync(
     });
   }
 );
-
-// export const signupWithGoogle = catchAsync(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const googleUser = req.user as googleProfile;
-//     const email = googleUser.emails[0].value;
-//     const photo = googleUser.photos[0].value;
-//     const name = googleUser.displayName;
-
-//     const user = await User.find({ email });
-
-//     if (user.length) {
-//       return next(new ErrorHandler('This email is already registered', 401));
-//     }
-
-//     const newUser = await User.create({
-//       name,
-//       email,
-//       photo,
-//       password: process.env.DEFAULT_USER_PASSWORD as string,
-//       passwordConfirm: process.env.DEFAULT_USER_PASSWORD as string,
-//     });
-
-//     // 4) create a session for this user (create a token)
-
-//     const token = await createToken(res, newUser._id.toString());
-//     // 5) redirect the user to home page after signup
-//     res.redirect('/');
-//   }
-// );
 
 const verifyToken = promisify(
   (
@@ -305,23 +282,54 @@ export const changePassword = catchAsync(
     res.redirect('/profile');
   }
 );
-
+//send mail for the user by its email
 export const forgetPassword = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    // const user = await User.findOne({ email: req.body.email });
-    // if (!user) {
-    //   return next(
-    //     new ErrorHandler('User with entered email is not found!.', 401)
-    //   );
-    // }
+    // get the user by its email
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return next(
+        new ErrorHandler('User with entered email is not found!.', 401)
+      );
+    }
+    // create a random hashed token to verify user by it
+    const token = user.createResetPasswordToken();
+    await user.save({ validateBeforeSave: false });
 
-    // const token = user.createResetPasswordToken();
+    //form the options of the email
+    options.to = user.email;
+    options.text = `use this url to reset your password http://127.0.0.1:3000/reset-password/:${token} , Please make sure to never share this link with any one ,You have only 10 minutes to reset your password..!`;
+    options.html = `<p>use this url to reset your password <a="http://127.0.0.1:3000/reset-password/:${token}">http://127.0.0.1:3000/reset-password/:${token}</a> , Please make sure to never share this link with any one ,You have only 10 minutes to reset your password..!</p>`;
 
-    // await user.save({validateBeforeSave:false});
+    // send email to the user gmail
     await sendMail(transporter, options);
 
-    res.status(200).json({
-      status: 'success',
+    res.render('checkEmail', {
+      title: 'Email Sent',
     });
+  }
+);
+// reset the user forgotten password
+export const resetPassword = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    // get the hashed user from the form
+    const token = req.body.token;
+
+    // get the user by the hashed token
+    const user = await User.findOne({ passwordResetToken: token });
+    if (!user) {
+      return next(
+        new ErrorHandler('This Reset Password Token is not correct!1', 400)
+      );
+    }
+    // reset the user password
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    // redirect user to login using his new password
+    res.redirect('/login');
   }
 );

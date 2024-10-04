@@ -77,6 +77,7 @@ userSchema.methods.checkPasswordReset = function (tokenStamp: number) {
   );
   return tokenStamp < passwordResetStamp;
 };
+
 userSchema.methods.createResetPasswordToken = function () {
   let token = crypto.randomBytes(32).toString('hex');
   this.passwordResetToken = crypto

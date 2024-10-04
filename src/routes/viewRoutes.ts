@@ -9,6 +9,8 @@ import {
   renderShop,
   renderSignup,
   renderTourProfile,
+  renderForgetPassword,
+  renderResetPasswordForm,
 } from '../controllers/viewControllers';
 import { isLoggedIn, protect } from '../controllers/authControllers';
 import { uploadUserPhotoMiddleware } from '../middlewares/middlewares';
@@ -20,7 +22,7 @@ viewRouter.route('/').get(isLoggedIn, renderHome);
 viewRouter
   .route('/home')
   .get(protect, isLoggedIn, createTourBooking, renderHome);
-viewRouter.route('/shop').get( isLoggedIn, renderShop);
+viewRouter.route('/shop').get(isLoggedIn, renderShop);
 viewRouter.route('/login').get(renderLogin);
 viewRouter.route('/signup').get(renderSignup);
 viewRouter.route('/tour/:slug').get(isLoggedIn, renderTourProfile);
@@ -39,5 +41,6 @@ viewRouter.get(
 viewRouter
   .route('/submit-user-data')
   .post(protect, uploadUserPhotoMiddleware, updateUserData);
-
+viewRouter.get('/forget-password', renderForgetPassword);
+viewRouter.get('/reset-password/:token', renderResetPasswordForm);
 export default viewRouter;
