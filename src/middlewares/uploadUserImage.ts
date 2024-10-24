@@ -2,6 +2,7 @@ import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import { ErrorHandler } from '../utils/error';
 import { Request } from 'express';
+import { userDoc } from '../interfaces/userDoc';
 
 export const createMulterMiddleware = (
   folderName: string,
@@ -14,7 +15,7 @@ export const createMulterMiddleware = (
     filename: (req, file, cb) => {
       cb(
         null,
-        `user-${req.user?._id || 'registered-user'}-${Date.now()}.${file.mimetype.split('/')[1]}`
+        `user-${(req.user as userDoc)?._id || 'registered-user'}-${Date.now()}.${file.mimetype.split('/')[1]}`
       );
     },
   });

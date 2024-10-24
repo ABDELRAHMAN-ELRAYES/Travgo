@@ -180,7 +180,8 @@ export const protect = catchAsync(
       );
     }
     // 6) add  current user data to the request
-    req.user = currentUser;
+    const user :userDoc = currentUser;
+    req.user = user;
 
     next();
   }

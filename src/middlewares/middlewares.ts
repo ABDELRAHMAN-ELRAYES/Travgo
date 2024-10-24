@@ -21,7 +21,7 @@ export const globalErrorHandlerMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req.headers.referer);
+  // console.log(req.headers.referer);
   error.status = error.status || 'Error';
   error.statusCode = error.statusCode || 500;
 
